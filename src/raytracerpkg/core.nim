@@ -46,3 +46,6 @@ proc normalize*(v: Tuple): Tuple =
 
 proc dot*(v: Tuple, v1: Tuple): float64 =
   v.x * v1.x + v.y * v1.y + v.z * v1.z + v.w * v1.w
+
+proc cross*(v: Tuple, v1: Tuple): Tuple =
+  vector(v.y * v1.z - v.z * v1.y, v.z * v1.x - v.x * v1.z, v.x * v1.y - v.y * v1.x)

@@ -121,3 +121,11 @@ suite "tuples features":
       b = vector(2, 3, 4)
 
     check (a.dot(b) == 20)
+
+  test "the cross product of two vectors":
+    var
+      a = vector(1, 2, 3)
+      b = vector(2, 3, 4)
+
+    check (a.cross(b) == vector(-1, 2, -1))
+    check (b.cross(a) == vector(1, -2, 1))
