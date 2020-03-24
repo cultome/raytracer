@@ -1,5 +1,6 @@
 import raytracerpkg/core
 import strutils
+import gnuplot
 
 type
   Projectile = object
@@ -23,7 +24,14 @@ var
   nextProjectile: Projectile
 
 nextProjectile = tick(env, initialProjectile)
+var
+  xs = @[nextProjectile.position.x]
+  ys = @[nextProjectile.position.y]
+
 while nextProjectile.position.y > 0:
   nextProjectile = tick(env, nextProjectile)
+  xs.add(nextProjectile.position.x)
+  ys.add(nextProjectile.position.y)
 
-# gnuplot -e 'plot "exercices/projectiles.data" with lines; pause 5'
+plot xs, ys, "X Y"
+discard readChar stdin
