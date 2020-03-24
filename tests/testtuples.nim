@@ -4,6 +4,16 @@ import math
 import raytracerpkg/core
 
 suite "tuples features":
+  test "tuples types":
+    var
+      p = point(1, 2, 3)
+      v = vector(1, 2, 3)
+      t = tp(1, 2, 3, 0)
+
+    check($type(p) == "Point")
+    check($type(v) == "Vector")
+    check($type(t) == "Tuple")
+
   test "a tuple with w=1 is a point":
     var p = point(4.3, -4.2, 3.1)
 
@@ -25,7 +35,7 @@ suite "tuples features":
       p = point(3.0, -2.0, 5.0)
       v = vector(-2.0, 3.0, 1.0)
 
-    check(p + v == (1.0, 1.0, 6.0, 1.0))
+    check(p + v == point(1.0, 1.0, 6.0))
 
   test "substracting two points":
     var
