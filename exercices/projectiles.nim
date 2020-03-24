@@ -1,4 +1,5 @@
 import raytracerpkg/core
+import strutils
 
 type
   Projectile = object
@@ -17,10 +18,12 @@ proc tick(env: Environment, pro: Projectile): Projectile =
   Projectile(position: nextPos, velocity: nextVel)
 
 var
-  p = Projectile(position: point(0, 1, 0), velocity: vector(1, 1, 0))
-  e = Environment(gravity: vector(o, -0.1, 0), wind: vector(-0.01, 0, 0))
-  nextP: Projectile
+  initialProjectile = Projectile(position: point(0, 1, 0), velocity: vector(1, 1, 0))
+  env = Environment(gravity: vector(0, -0.1, 0), wind: vector(-0.01, 0, 0))
+  nextProjectile: Projectile
 
-for step in 0..10:
- nextP = tick(e, p)
- echo nextP
+nextProjectile = tick(env, initialProjectile)
+while nextProjectile.position.y > 0:
+  nextProjectile = tick(env, nextProjectile)
+
+# gnuplot -e 'plot "exercices/projectiles.data" with lines; pause 5'
