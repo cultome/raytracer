@@ -36,10 +36,13 @@ proc `*`*(t1: Tuple, scalar: float64): Tuple =
 proc `/`*(t1: Tuple, scalar: float64): Tuple =
   (x: t1.x / scalar, y: t1.y / scalar, z: t1.z / scalar, w: t1.w / scalar)
 
-proc magnitude*(t: Tuple): float64 =
-  sqrt(pow(t.x, 2) + pow(t.y, 2) + pow(t.z, 2) + pow(t.w, 2))
+proc magnitude*(v: Tuple): float64 =
+  sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2) + pow(v.w, 2))
 
-proc normalize*(t: Tuple): Tuple =
-  var m = t.magnitude
+proc normalize*(v: Tuple): Tuple =
+  var m = v.magnitude
 
-  tp(t.x / m, t.y / m, t.z / m, t.w / m)
+  tp(v.x / m, v.y / m, v.z / m, v.w / m)
+
+proc dot*(v: Tuple, v1: Tuple): float64 =
+  v.x * v1.x + v.y * v1.y + v.z * v1.z + v.w * v1.w

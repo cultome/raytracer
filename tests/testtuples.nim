@@ -114,3 +114,10 @@ suite "tuples features":
     var v = vector(1, 2, 3)
 
     check(v.normalize.magnitude == 1)
+
+  test "the dot product of two tuples":
+    var
+      a = vector(1, 2, 3)
+      b = vector(2, 3, 4)
+
+    check (a.dot(b) == 20)
