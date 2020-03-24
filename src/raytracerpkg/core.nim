@@ -11,12 +11,15 @@ type
   Point* = ref object of Tuple
   Vector* = ref object of Tuple
 
-template genericops(t) =
+  Color* = tuple[red, green, blue: float64]
+
+template genericTupleOps(t) =
   proc `<`*(a: t, b: Tuple): bool =
     a.x < b.x or a.y < b.y or a.z < b.z
 
   proc `==`*(a: t, b: Tuple): bool =
-    a.x == b.x and a.y == b.y and a.z == b.z and a.w == b.w
+    const epsilon = 1e-10
+    abs(a.x - b.x) < epsilon and abs(a.y - b.y) < epsilon and abs(a.z - b.z) < epsilon and abs(a.w - b.w) < epsilon
 
   proc `+`*(t1: t, t2: Tuple): t =
     t(x: t1.x + t2.x, y: t1.y + t2.y, z: t1.z + t2.z, w: t1.w + t2.w)
@@ -33,13 +36,14 @@ template genericops(t) =
   proc `/`*(t1: t, scalar: float64): t =
     t(x: t1.x / scalar, y: t1.y / scalar, z: t1.z / scalar, w: t1.w / scalar)
 
-genericops(Tuple)
-genericops(Vector)
-genericops(Point)
+genericTupleOps(Tuple)
+genericTupleOps(Vector)
+genericTupleOps(Point)
 
 template `$`*(a: Tuple): string =
   "($1, $2, $3, $4)" % [$a.x, $a.y, $a.z, $a.w]
 
+# constructors
 proc tp*(x, y, z, w: int32): Tuple =
   Tuple(x: x.float64, y: y.float64, z: z.float64, w: w.float64)
 
@@ -58,6 +62,10 @@ proc vector*(x, y, z: int32): Vector =
 proc vector*(x, y, z: float64): Vector =
   Vector(x: x, y: y, z: z, w: 0.0.float64)
 
+proc color*(red, green, blue: float64): Color =
+  (red: red, green: green, blue: blue)
+
+# functions
 proc magnitude*(v: Vector): float64 =
   sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2) + pow(v.w, 2))
 
@@ -71,3 +79,16 @@ proc dot*(v: Vector, v1: Vector): float64 =
 
 proc cross*(v: Vector, v1: Vector): Vector =
   vector(v.y * v1.z - v.z * v1.y, v.z * v1.x - v.x * v1.z, v.x * v1.y - v.y * v1.x)
+
+proc `+`*(c1, c2: Color): Color =
+  (red: c1.red + c2.red, green: c1.green + c2.green, blue: c1.blue + c2.blue)
+
+proc `-`*(c1, c2: Color): Color =
+  (red: c1.red - c2.red, green: c1.green - c2.green, blue: c1.blue - c2.blue)
+
+proc `*`*(c1: Color, scalar: float64): Color =
+  (red: c1.red * scalar, green: c1.green * scalar, blue: c1.blue * scalar)
+
+proc `==`*(a, b: Color): bool =
+  const epsilon = 1e-10
+  abs(a.red - b.red) < epsilon and abs(a.green - b.green) < epsilon and abs(a.blue - b.blue) < epsilon

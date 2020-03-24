@@ -139,3 +139,29 @@ suite "tuples features":
 
     check (a.cross(b) == vector(-1, 2, -1))
     check (b.cross(a) == vector(1, -2, 1))
+
+  test "colors are (red, green, blue) tuples":
+    var c = color(-0.5, 0.4, 1.7)
+
+    check(c.red == -0.5)
+    check(c.green == 0.4)
+    check(c.blue == 1.7)
+
+  test "adding colors":
+    var
+      c1 = color(0.9, 0.6, 0.75)
+      c2 = color(0.7, 0.1, 0.25)
+
+    check(c1 + c2 == color(1.6, 0.7, 1.0))
+
+  test "substracting colors":
+    var
+      c1 = color(0.9, 0.6, 0.75)
+      c2 = color(0.7, 0.1, 0.25)
+
+    check(c1 - c2 == color(0.2, 0.5, 0.5))
+
+  test "multiplying a color by a scalar":
+    var c = color(0.2, 0.3, 0.4)
+
+    check(c * 2 == color(0.4, 0.6, 0.8))
