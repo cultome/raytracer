@@ -89,6 +89,9 @@ proc `-`*(c1, c2: Color): Color =
 proc `*`*(c1: Color, scalar: float64): Color =
   (red: c1.red * scalar, green: c1.green * scalar, blue: c1.blue * scalar)
 
+proc `*`*(c1, c2: Color): Color =
+  (red: c1.red * c2.red, green: c1.green * c2.green, blue: c1.blue * c2.blue)
+
 proc `==`*(a, b: Color): bool =
   const epsilon = 1e-10
   abs(a.red - b.red) < epsilon and abs(a.green - b.green) < epsilon and abs(a.blue - b.blue) < epsilon

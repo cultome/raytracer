@@ -165,3 +165,10 @@ suite "tuples features":
     var c = color(0.2, 0.3, 0.4)
 
     check(c * 2 == color(0.4, 0.6, 0.8))
+
+  test "mutiply colors":
+    var
+      c1 = color(1, 0.2, 0.4)
+      c2 = color(0.9, 1, 0.1)
+
+    check(c1 * c2 == color(0.9, 0.2, 0.04))
