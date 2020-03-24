@@ -38,3 +38,8 @@ proc `/`*(t1: Tuple, scalar: float64): Tuple =
 
 proc magnitude*(t: Tuple): float64 =
   sqrt(pow(t.x, 2) + pow(t.y, 2) + pow(t.z, 2) + pow(t.w, 2))
+
+proc normalize*(t: Tuple): Tuple =
+  var m = t.magnitude
+
+  tp(t.x / m, t.y / m, t.z / m, t.w / m)

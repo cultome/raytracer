@@ -100,3 +100,17 @@ suite "tuples features":
 
     check(v.magnitude == sqrt(14.0))
 
+  test "normalizing vector (4, 0, 0) gives (1, 0, 0)":
+    var v = vector(4, 0, 0)
+
+    check(v.normalize == vector(1, 0, 0))
+
+  test "normalizing vector (1, 2, 3) gives (1, 0, 0)":
+    var v = vector(1, 2, 3)
+
+    check(v.normalize == vector(1 / sqrt(14.0), 2 / sqrt(14.0), 3 / sqrt(14.0)))
+
+  test "the magnitude of a normalized vector":
+    var v = vector(1, 2, 3)
+
+    check(v.normalize.magnitude == 1)
