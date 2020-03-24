@@ -35,7 +35,7 @@ suite "tuples features":
       p = point(3.0, -2.0, 5.0)
       v = vector(-2.0, 3.0, 1.0)
 
-    check(p + v == point(1.0, 1.0, 6.0))
+    check(p + v == point(1, 1, 6))
 
   test "substracting two points":
     var

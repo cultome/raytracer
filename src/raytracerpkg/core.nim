@@ -20,7 +20,10 @@ template `<=`*(a, b: Tuple): bool =
 template `==`*(a, b: Tuple): bool =
   a.x == b.x and a.y == b.y and a.z == b.z and a.w == b.w
 
-template `==`*(a, b: Vector): bool =
+template `==`*(a: Point, b: Tuple): bool =
+  a.x == b.x and a.y == b.y and a.z == b.z and a.w == b.w
+
+template `==`*(a: Vector, b: Tuple): bool =
   const epsilon = 1e-10
   abs(a.x - b.x) < epsilon and abs(a.y - b.y) < epsilon and abs(a.z - b.z) < epsilon and abs(a.w - b.w) < epsilon
 
@@ -45,8 +48,8 @@ proc vector*(x, y, z: int32): Vector =
 proc vector*(x, y, z: float64): Vector =
   Vector(x: x, y: y, z: z, w: 0.0.float64)
 
-proc `+`*(t1, t2: Tuple): Tuple =
-  Tuple(x: t1.x + t2.x, y: t1.y + t2.y, z: t1.z + t2.z, w: t1.w + t2.w)
+proc `+`*[T](t1: T, t2: Tuple): T =
+  T(x: t1.x + t2.x, y: t1.y + t2.y, z: t1.z + t2.z, w: t1.w + t2.w)
 
 proc `-`*(t1, t2: Tuple): Tuple =
   Tuple(x: t1.x - t2.x, y: t1.y - t2.y, z: t1.z - t2.z, w: t1.w - t2.w)
