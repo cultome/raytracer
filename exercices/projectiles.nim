@@ -18,20 +18,25 @@ proc tick(env: Environment, pro: Projectile): Projectile =
 
   Projectile(position: nextPos, velocity: nextVel)
 
-var
-  initialProjectile = Projectile(position: point(0, 1, 0), velocity: vector(1, 1, 0))
-  env = Environment(gravity: vector(0, -0.1, 0), wind: vector(-0.01, 0, 0))
-  nextProjectile: Projectile
+proc launch*(position: Point, velocity: Vector, gravity: Vector, wind: Vector): (seq[float64], seq[float64]) =
+  var
+    initialProjectile = Projectile(position: position, velocity: velocity)
+    env = Environment(gravity: gravity, wind: wind)
+    nextProjectile: Projectile
 
-nextProjectile = tick(env, initialProjectile)
-var
-  xs = @[nextProjectile.position.x]
-  ys = @[nextProjectile.position.y]
+  nextProjectile = tick(env, initialProjectile)
+  var
+    xs = @[nextProjectile.position.x]
+    ys = @[nextProjectile.position.y]
 
-while nextProjectile.position.y > 0:
-  nextProjectile = tick(env, nextProjectile)
-  xs.add(nextProjectile.position.x)
-  ys.add(nextProjectile.position.y)
+  while nextProjectile.position.y > 0:
+    nextProjectile = tick(env, nextProjectile)
+    xs.add(nextProjectile.position.x)
+    ys.add(nextProjectile.position.y)
 
-plot xs, ys, "X Y"
-discard readChar stdin
+  (xs, ys)
+
+when isMainModule:
+  let (xs, ys) = launch(point(0, 1, 0), vector(1, 1, 0), vector(0, -0.1, 0), vector(-0.01, 0, 0))
+  plot xs, ys, "X Y"
+  discard readChar stdin
