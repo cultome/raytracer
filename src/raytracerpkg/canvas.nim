@@ -1,3 +1,6 @@
+import strutils
+import sequtils
+
 import raytracerpkg/core
 
 type
@@ -6,24 +9,60 @@ type
     height*: int
     pixels*: seq[seq[Color]]
 
-proc canvas*(width, height: int): Canvas =
+proc canvas*(width, height: int, color: Color): Canvas =
   var
     pixels: seq[seq[Color]]
     col: seq[Color]
-    color = color(0, 0, 0)
 
-  for x in 0..<width:
+  for _ in 0..<height:
     col = @[]
 
-    for y in 0..<height:
+    for _ in 0..<width:
       col.add(color)
 
     pixels.add(col)
 
   Canvas(width: width, height: height, pixels: pixels)
 
+proc canvas*(width, height: int): Canvas =
+  canvas(width, height, color(0, 0, 0))
+
 proc writePixel*(c: Canvas, x, y: int, color: Color) =
-  c.pixels[x][y] = color
+  c.pixels[y][x] = color
 
 proc pixelAt*(c: Canvas, x, y: int): Color =
-  c.pixels[x][y]
+  c.pixels[y][x]
+
+proc normalizeColor(val: float64): int =
+  if val <= 0:
+    0
+  elif val >= 1:
+    255
+  else:
+    int(255 * val + 0.5)
+
+proc toPpm*(c: Canvas): string =
+  let header = "P3\n$1 $2\n255" % [$c.width, $c.height]
+  var
+    content: string
+    lines = @[""]
+    currLine = 0
+    normalized: string
+
+  for row in c.pixels:
+    for pixel in row:
+      for val in [pixel.red, pixel.green, pixel.blue]:
+        normalized = $normalizeColor(val)
+
+        if lines[currLine].len + normalized.len > 70:
+          lines[currLine] = lines[currLine].strip
+          lines.add("")
+          currLine += 1
+
+        lines[currLine] &= normalized & " "
+
+    lines[currLine] = lines[currLine].strip
+    lines.add("")
+    currLine += 1
+
+  header & "\n" & lines.join("\n")
