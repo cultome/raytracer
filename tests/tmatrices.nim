@@ -115,3 +115,41 @@ suite "matrices features":
       t = tp(1, 2, 3, 1)
 
     check(m * t == tp(18, 24, 33, 1))
+
+  test "Multiplying a matrix by the identity matrix":
+    var m = matrix(
+      @[0.0, 1.0, 2.0, 4.0],
+      @[1.0, 2.0, 4.0, 8.0],
+      @[2.0, 4.0, 8.0, 16.0],
+      @[4.0, 8.0, 16.0, 32.0],
+    )
+
+    check(m * identity(4) == m)
+
+  test "Multiplying the identity matrix by a tuple":
+    var t = tp(1, 2, 3, 4)
+
+    check(identity(4) * t == t)
+
+  test "Scenario: Transposing a matrix":
+    var
+      m = matrix(
+        @[0.0, 9.0, 3.0, 0.0],
+        @[9.0, 8.0, 0.0, 8.0],
+        @[1.0, 8.0, 5.0, 3.0],
+        @[0.0, 0.0, 5.0, 8.0],
+      )
+
+      r = matrix(
+        @[0.0, 9.0, 1.0, 0.0],
+        @[9.0, 8.0, 8.0, 0.0],
+        @[3.0, 0.0, 5.0, 5.0],
+        @[0.0, 8.0, 3.0, 8.0],
+      )
+
+    check(m.transpose == r)
+
+  test "Transposing the identity matrix":
+    var id = identity(4)
+
+    check(id.transpose == id)

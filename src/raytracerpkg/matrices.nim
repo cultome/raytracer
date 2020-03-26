@@ -6,6 +6,24 @@ type
 proc matrix*(cols: varargs[seq[float64]]): Matrix =
   @cols
 
+proc identity*(size: int): Matrix =
+  var
+    cols: seq[seq[float64]]
+    col: seq[float64]
+
+  for y in 0..<size:
+    col = @[]
+
+    for x in 0..<size:
+      if y == x:
+        col.add(1.0)
+      else:
+        col.add(0.0)
+
+    cols.add(col)
+
+  matrix(cols)
+
 proc filledMatrix*(rowNum, colNum: int, defaultValue: float64): Matrix =
   var
     col: seq[float64]
@@ -20,6 +38,13 @@ proc filledMatrix*(rowNum, colNum: int, defaultValue: float64): Matrix =
     cols.add(col)
 
   matrix(cols)
+
+proc transpose*(m: Matrix): Matrix =
+  result = filledMatrix(m[0].len, m.len, 0.0)
+
+  for ridx, row in m.pairs:
+    for cidx, col in row.pairs:
+      result[ridx][cidx] = m[cidx][ridx]
 
 proc at*(m: Matrix, y, x: int): float64 =
   m[y][x]
