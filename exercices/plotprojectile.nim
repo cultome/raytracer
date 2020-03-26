@@ -1,4 +1,4 @@
-import raytracerpkg/core
+import raytracerpkg/tuples
 import raytracerpkg/canvas
 import sequtils
 import math

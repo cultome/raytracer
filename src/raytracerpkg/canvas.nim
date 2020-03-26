@@ -1,13 +1,13 @@
 import strutils
 import sequtils
 
-import raytracerpkg/core
+import raytracerpkg/tuples
 
 type
   Canvas* = ref object
     width*: int
     height*: int
-    pixels*: seq[seq[Color]]
+    pixels*: seq[seq[Color]] # pixels[y][x]
 
 proc canvas*(width, height: int, color: Color): Canvas =
   var

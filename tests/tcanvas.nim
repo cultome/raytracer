@@ -2,7 +2,7 @@ import unittest
 import strutils
 
 import raytracerpkg/canvas
-import raytracerpkg/core
+import raytracerpkg/tuples
 
 suite "canvas features":
   test "creating a canvas":

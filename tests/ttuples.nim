@@ -1,7 +1,7 @@
 import unittest
 import math
 
-import raytracerpkg/core
+import raytracerpkg/tuples
 
 suite "tuples features":
   test "tuples types":

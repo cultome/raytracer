@@ -1,4 +1,4 @@
-import raytracerpkg/core
+import raytracerpkg/tuples
 import strutils
 import gnuplot
 
