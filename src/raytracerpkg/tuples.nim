@@ -13,12 +13,13 @@ type
 
   Color* = tuple[red, green, blue: float64]
 
+const epsilon = 1e-5
+
 template genericTupleOps(t) =
   proc `<`*(a: t, b: Tuple): bool =
     a.x < b.x or a.y < b.y or a.z < b.z
 
   proc `==`*(a: t, b: Tuple): bool =
-    const epsilon = 1e-10
     abs(a.x - b.x) < epsilon and abs(a.y - b.y) < epsilon and abs(a.z - b.z) < epsilon and abs(a.w - b.w) < epsilon
 
   proc `+`*(t1: t, t2: Tuple): t =
@@ -93,5 +94,4 @@ proc `*`*(c1, c2: Color): Color =
   (red: c1.red * c2.red, green: c1.green * c2.green, blue: c1.blue * c2.blue)
 
 proc `==`*(a, b: Color): bool =
-  const epsilon = 1e-10
   abs(a.red - b.red) < epsilon and abs(a.green - b.green) < epsilon and abs(a.blue - b.blue) < epsilon

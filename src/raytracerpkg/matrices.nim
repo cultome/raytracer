@@ -1,7 +1,23 @@
+import math
+import strutils
+
 import raytracerpkg/tuples
 
 type
   Matrix* = seq[seq[float64]]
+
+const epsilon = 1e-5
+
+proc `==`*(a, b: Matrix): bool =
+  if a.len != b.len or a[0].len != b[0].len:
+    return false
+
+  for y in 0..<a.len:
+    for x in 0..<a[0].len:
+      if abs(abs(a[y][x]) - abs(b[y][x])) > epsilon:
+        return false
+
+  return true
 
 proc matrix*(cols: varargs[seq[float64]]): Matrix =
   @cols
@@ -78,7 +94,7 @@ proc minor*(m: Matrix, row, col: int): float64 =
 proc cofactor*(m: Matrix, row, col: int): float64 =
   result = m.minor(row, col)
 
-  if row + col mod 2 != 0:
+  if (row + col) mod 2 != 0:
     result *= -1
 
 proc transpose*(m: Matrix): Matrix =
@@ -87,6 +103,24 @@ proc transpose*(m: Matrix): Matrix =
   for ridx, row in m.pairs:
     for cidx, col in row.pairs:
       result[ridx][cidx] = m[cidx][ridx]
+
+proc inverse*(m: Matrix): Matrix =
+  let det = m.determinant
+
+  if det == 0:
+    raise newException(ValueError, "Matrix is not invertible")
+
+  var
+    height = m.len
+    width = m[0].len
+    cofact: float64
+
+  result = filledMatrix(height, width, 0.0)
+
+  for y in 0..<height:
+    for x in 0..<width:
+      cofact = m.cofactor(y, x)
+      result[x][y] = cofact / det
 
 proc at*(m: Matrix, y, x: int): float64 =
   m[y][x]
@@ -117,3 +151,16 @@ proc `*`*(m1, m2: Matrix): Matrix =
         acc += m1[ridx][idx] * m2[idx][cidx]
 
       result[ridx][cidx] = acc
+
+proc `$`*(m: Matrix): string =
+  var val: string
+
+  result &= "\n"
+  for y in 0..<m.len:
+    result &= "| "
+
+    for x in 0..<m[0].len:
+      val = m[y][x].formatFloat(ffDecimal, 10)
+      result &= "$1 | " % [val.align(10)]
+
+    result &= "\n"
