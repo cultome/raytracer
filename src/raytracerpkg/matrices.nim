@@ -39,6 +39,30 @@ proc filledMatrix*(rowNum, colNum: int, defaultValue: float64): Matrix =
 
   matrix(cols)
 
+proc submatrix*(m: Matrix, row, col: int): Matrix =
+  var
+    width = m.len - 1
+    height = m[0].len - 1
+    xOff = 0
+    yOff = 0
+
+  result = filledMatrix(width, height, 0.0)
+
+  for y in 0..<height:
+    xOff = 0
+    if y == row:
+      yOff += 1
+
+    for x in 0..<width:
+      if x == col:
+        xOff += 1
+
+      result[y][x] = m[y + yOff][x + xOff]
+
+
+proc determinant*(m: Matrix): float64 =
+  m[0][0] * m[1][1] - m[1][0] * m[0][1]
+
 proc transpose*(m: Matrix): Matrix =
   result = filledMatrix(m[0].len, m.len, 0.0)
 

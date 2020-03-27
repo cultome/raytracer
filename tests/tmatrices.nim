@@ -153,3 +153,43 @@ suite "matrices features":
     var id = identity(4)
 
     check(id.transpose == id)
+
+  test "Calculating the determinant of a 2x2 matrix":
+    var m = matrix(
+      @[1.0, 5.0],
+      @[-3.0, 2.0],
+    )
+
+    check(m.determinant == 17)
+
+  test "A submatrix of a 3x3 matrix is a 2x2 matrix":
+    var
+      m = matrix(
+        @[1.0, 5.0, 0.0],
+        @[-3.0, 2.0, 7.0],
+        @[0.0, 6.0, -3.0],
+      )
+
+      s = matrix(
+        @[-3.0, 2.0],
+        @[0.0, 6.0],
+      )
+
+    check(m.submatrix(0, 2) == s)
+
+  test "A submatrix of a 4x4 matrix is a 3x3 matrix":
+    var
+      m = matrix(
+        @[-6.0, 1.0, 1, 6.0],
+        @[-8.0, 5.0, 8, 6.0],
+        @[-1.0, 0.0, 8, 2.0],
+        @[-7.0, 1.0, -1.0, 1.0],
+      )
+
+      s = matrix(
+        @[-6.0, 1.0, 6.0,],
+        @[-8.0, 8.0, 6.0,],
+        @[-7.0, -1.0, 1.0,],
+      )
+
+    check(m.submatrix(2, 1) == s)
