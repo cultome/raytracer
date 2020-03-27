@@ -1,4 +1,5 @@
 import math
+import sequtils
 import strutils
 
 import raytracerpkg/tuples
@@ -18,6 +19,11 @@ proc `==`*(a, b: Matrix): bool =
         return false
 
   return true
+
+proc matrix*(cols: varargs[seq[int]]): Matrix =
+  @cols.map(proc (row: seq[int]): seq[float64] =
+    row.mapIt( float64(it) )
+  )
 
 proc matrix*(cols: varargs[seq[float64]]): Matrix =
   @cols
@@ -152,7 +158,7 @@ proc `*`*(m1, m2: Matrix): Matrix =
 
       result[ridx][cidx] = acc
 
-proc `$`*(m: Matrix): string =
+proc print*(m: Matrix, decimals: int): string =
   var val: string
 
   result &= "\n"
@@ -160,7 +166,10 @@ proc `$`*(m: Matrix): string =
     result &= "| "
 
     for x in 0..<m[0].len:
-      val = m[y][x].formatFloat(ffDecimal, 10)
-      result &= "$1 | " % [val.align(10)]
+      val = m[y][x].formatFloat(ffDecimal, decimals)
+      result &= "$1 | " % [val.align(decimals + 3)]
 
     result &= "\n"
+
+proc `$`*(m: Matrix): string =
+  m.print(4)
