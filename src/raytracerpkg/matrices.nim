@@ -59,9 +59,27 @@ proc submatrix*(m: Matrix, row, col: int): Matrix =
 
       result[y][x] = m[y + yOff][x + xOff]
 
+proc cofactor*(m: Matrix, row, col: int): float64
 
 proc determinant*(m: Matrix): float64 =
-  m[0][0] * m[1][1] - m[1][0] * m[0][1]
+  if m.len == 2 and m[0].len == 2:
+    return m[0][0] * m[1][1] - m[1][0] * m[0][1]
+
+  var cofact: float64
+
+  for x, val in m[0].pairs:
+    cofact = m.cofactor(0, x)
+    result += val * cofact
+
+proc minor*(m: Matrix, row, col: int): float64 =
+  var s = m.submatrix(row, col)
+  s.determinant
+
+proc cofactor*(m: Matrix, row, col: int): float64 =
+  result = m.minor(row, col)
+
+  if row + col mod 2 != 0:
+    result *= -1
 
 proc transpose*(m: Matrix): Matrix =
   result = filledMatrix(m[0].len, m.len, 0.0)

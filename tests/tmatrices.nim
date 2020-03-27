@@ -193,3 +193,55 @@ suite "matrices features":
       )
 
     check(m.submatrix(2, 1) == s)
+
+  test "Calculating a minor of a 3x3 matrix":
+    var
+      m = matrix(
+        @[3.0, 5.0, 0.0],
+        @[2.0, -1.0, -7.0],
+        @[6.0, -1.0, 5.0],
+      )
+
+      s = m.submatrix(1, 0)
+
+    check(s.determinant == 25)
+    check(m.minor(1, 0) == 25)
+
+  test "Calculating a cofactor of a 3x3 matrix":
+    var m = matrix(
+      @[3.0, 5.0, 0.0],
+      @[2.0, -1.0, -7.0],
+      @[6.0, -1.0,  5.0],
+    )
+
+    check(m.minor(0, 0) == -12.0)
+    check(m.cofactor(0, 0) == -12.0)
+
+    check(m.minor(1, 0) == 25.0)
+    check(m.cofactor(1, 0) == -25.0)
+
+  test "Calculating the determinant of a 3x3 matrix":
+    var m = matrix(
+      @[1.0, 2.0, 6.0],
+      @[-5.0, 8.0,-4.0],
+      @[2.0, 6.0, 4.0],
+    )
+
+    check(m.cofactor(0, 0) == 56.0)
+    check(m.cofactor(0, 1) == 12.0)
+    check(m.cofactor(0, 2) == -46.0)
+    check(m.determinant == -196.0)
+
+  test "Calculating the determinant of a 4x4 matrix":
+    var m = matrix(
+      @[-2.0, -8.0, 3.0, 5.0],
+      @[-3.0, 1.0, 7.0, 3.0],
+      @[1.0, 2.0, -9.0, 6.0],
+      @[-6.0,  7.0, 7.0, -9.0],
+    )
+
+    check(m.cofactor(0, 0) == 690.0)
+    check(m.cofactor(0, 1) == 447.0)
+    check(m.cofactor(0, 2) == 210.0)
+    check(m.cofactor(0, 3) == 51.0)
+    check(m.determinant == -4071.0)
