@@ -92,115 +92,71 @@ suite "Matrix Transformations":
     check(half_quarter * p == point(-sqrt(2.0)/2, sqrt(2.0)/2, 0))
     check(full_quarter * p == point(-1, 0, 0))
 
-  #test "A shearing transformation moves x in proportion to y":
-    #var
-      #t = shearing(1, 0, 0, 0, 0, 0)
-      #p = point(2, 3, 4)
+  test "A shearing transformation moves x in proportion to y":
+    var
+      t = shearing(1, 0, 0, 0, 0, 0)
+      p = point(2, 3, 4)
 
-    #check(transform * p == point(5, 3, 4))
+    check(t * p == point(5, 3, 4))
 
-  #test "A shearing transformation moves x in proportion to z":
-    #var
-      #t = shearing(0, 1, 0, 0, 0, 0)
-      #p = point(2, 3, 4)
+  test "A shearing transformation moves x in proportion to z":
+    var
+      t = shearing(0, 1, 0, 0, 0, 0)
+      p = point(2, 3, 4)
 
-    #check(transform * p == point(6, 3, 4))
+    check(t * p == point(6, 3, 4))
 
-  #test "A shearing transformation moves y in proportion to x":
-    #var
-      #t = shearing(0, 0, 1, 0, 0, 0)
-      #p = point(2, 3, 4)
+  test "A shearing transformation moves y in proportion to x":
+    var
+      t = shearing(0, 0, 1, 0, 0, 0)
+      p = point(2, 3, 4)
 
-    #check(transform * p == point(2, 5, 4))
+    check(t * p == point(2, 5, 4))
 
-  #test "A shearing transformation moves y in proportion to z":
-    #var
-      #t = shearing(0, 0, 0, 1, 0, 0)
-      #p = point(2, 3, 4)
+  test "A shearing transformation moves y in proportion to z":
+    var
+      t = shearing(0, 0, 0, 1, 0, 0)
+      p = point(2, 3, 4)
 
-    #check(transform * p == point(2, 7, 4))
+    check(t * p == point(2, 7, 4))
 
-  #test "A shearing transformation moves z in proportion to x":
-    #var
-      #t = shearing(0, 0, 0, 0, 1, 0)
-      #p = point(2, 3, 4)
+  test "A shearing transformation moves z in proportion to x":
+    var
+      t = shearing(0, 0, 0, 0, 1, 0)
+      p = point(2, 3, 4)
 
-    #check(transform * p == point(2, 3, 6))
+    check(t * p == point(2, 3, 6))
 
-  #test "A shearing transformation moves z in proportion to y":
-    #var
-      #t = shearing(0, 0, 0, 0, 0, 1)
-      #p = point(2, 3, 4)
+  test "A shearing transformation moves z in proportion to y":
+    var
+      t = shearing(0, 0, 0, 0, 0, 1)
+      p = point(2, 3, 4)
 
-    #check(transform * p == point(2, 3, 7))
+    check(t * p == point(2, 3, 7))
 
-  #test "Individual transformations are applied in sequence":
-    #var
-      #p = point(1, 0, 1)
-      #t1 = rotation(axisX, PI / 2)
-      #t2 = scaling(5, 5, 5)
-      #t3 = translation(10, 5, 7)
+  test "Individual transformations are applied in sequence":
+    var
+      p = point(1, 0, 1)
+      t1 = rotation(axisX, PI / 2)
+      t2 = scaling(5, 5, 5)
+      t3 = translation(10, 5, 7)
+      # apply rotation first
+      p2 = t1 * p
+      # then apply scaling
+      p3 = t2 * p2
+      # then apply translation
+      p4 = t3 * p3
 
-    ## apply rotation first
-    #p2 = A * p
-    #check(p2 == point(1, -1, 0))
+    check(p2 == point(1, -1, 0))
+    check(p3 == point(5, -5, 0))
+    check(p4 == point(15, 0, 7))
 
-    ## then apply scaling
-    #p3 = B * p2
-    #check(p3 == point(5, -5, 0))
+  test "Chained transformations must be applied in reverse order":
+    var
+      p = point(1, 0, 1)
+      t1 = rotation(axisX, PI / 2)
+      t2 = scaling(5, 5, 5)
+      t3 = translation(10, 5, 7)
+      tr = t3 * t2 * t1
 
-    ## then apply translation
-    #p4 = C * p3
-    #check(p4 == point(15, 0, 7))
-
-  #test "Chained transformations must be applied in reverse order":
-    #var
-      #p = point(1, 0, 1)
-      #t1 = rotation(axisX, PI / 2)
-      #t2 = scaling(5, 5, 5)
-      #t3 = translation(10, 5, 7)
-      #T = C * B * A
-
-    #check(T * p == point(15, 0, 7))
-
-  #test "The transformation matrix for the default orientation":
-    #var
-      #p = point(0, 0, 0)
-      #to = point(0, 0, -1)
-      #up = vector(0, 1, 0)
-      #t = view_transform(from, to, up)
-
-    #check(t == identity_matrix)
-
-  #test "A view transformation matrix looking in positive z direction":
-    #var
-      #p = point(0, 0, 0)
-      #to = point(0, 0, 1)
-      #up = vector(0, 1, 0)
-      #t = view_transform(from, to, up)
-
-    #check(t == scaling(-1, 1, -1))
-
-  #test "The view transformation moves the world":
-    #var
-      #p = point(0, 0, 8)
-      #to = point(0, 0, 0)
-      #up = vector(0, 1, 0)
-      #t = view_transform(from, to, up)
-
-    #check(t == translation(0, 0, -8))
-
-  #test "An arbitrary view transformation":
-    #var
-      #p = point(1, 3, 2)
-      #to = point(4, -2, 8)
-      #up = vector(1, 1, 0)
-      #t = p.view_transform(to, up)
-      #m = matrix(
-        #@[-0.50709, 0.50709, 0.67612, -2.36643],
-        #@[0.76772, 0.60609, 0.12122, -2.82843],
-        #@[-0.35857, 0.59761, -0.71714, 0.00000],
-        #@[0.00000, 0.00000, 0.00000, 1.00000],
-      #)
-
-    #check(t == m)
+    check(tr * p == point(15, 0, 7))

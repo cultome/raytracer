@@ -37,3 +37,12 @@ proc rotation*(axis: Axis, rads: float64): Matrix =
     result[0][1] = -sin(rads)
     result[1][0] = sin(rads)
     result[1][1] = cos(rads)
+
+proc shearing*(xy, xz, yx, yz, zx, zy: float64): Matrix =
+  result = identity(4)
+  result[0][1] = xy
+  result[0][2] = xz
+  result[1][0] = yx
+  result[1][2] = yz
+  result[2][0] = zx
+  result[2][1] = zy
