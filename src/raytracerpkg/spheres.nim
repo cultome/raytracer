@@ -4,7 +4,7 @@ import raytracerpkg/tuples
 import raytracerpkg/rays
 
 type
-  Sphere = ref object
+  Sphere* = ref object
 
 proc sphere*(): Sphere =
   Sphere()
