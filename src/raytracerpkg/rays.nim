@@ -17,13 +17,18 @@ proc position*(r: Ray, distance: float64): Point =
   r.origin + (r.direction * distance)
 
 proc transform*(r: Ray, transformation: Matrix): Ray =
-  ray(point(0, 0, 0), vector(0, 0, 0))
+  var
+    tOrigin = cast[Point](transformation * r.origin)
+    tDir = cast[Vector](transformation * r.direction)
+
+  ray(tOrigin, tDir)
 
 proc intersect*(r: Ray, s: Sphere): seq[Intersection] =
   var
-    sphereToRay = r.origin - point(0, 0, 0)
-    a = r.direction.dot(r.direction)
-    b = 2 * r.direction.dot(sphereToRay)
+    tr = r.transform(s.transformation.inverse)
+    sphereToRay = tr.origin - point(0, 0, 0)
+    a = tr.direction.dot(tr.direction)
+    b = 2 * tr.direction.dot(sphereToRay)
     c = sphereToRay.dot(sphereToRay) - 1
     discriminant = pow(b, 2) - (4 * a * c)
 

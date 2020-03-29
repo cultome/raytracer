@@ -2,6 +2,7 @@ import unittest
 
 import raytracerpkg/rays
 import raytracerpkg/tuples
+import raytracerpkg/matrices
 import raytracerpkg/transformations
 import raytracerpkg/spheres
 
@@ -64,35 +65,40 @@ suite "Spheres":
     check(xs[0].obj == s)
     check(xs[1].obj == s)
 
-  #test "A sphere's default transformation":
-  # var
-  # s ← sphere()
-  #Then s.transform = identity_matrix
+  test "A sphere's default transformation":
+    var s = sphere()
 
-  #test "Changing a sphere's transformation":
-  # var
-  # s ← sphere()
-    #And t ← translation(2, 3, 4)
-  #When set_transform(t)
-  #Then s.transform = t
+    check(s.transformation == identity(4))
 
-  #test "Intersecting a scaled sphere with a ray":
-  # var
-  # r ← ray(point(0, 0, -5), vector(0, 0, 1))
-    #And s ← sphere()
-  #When set_transform(scaling(2, 2, 2))
-    #And xs ← s.intersect(r)
-  #Then xs.len = 2
-    #And xs[0].t = 3
-    #And xs[1].t = 7
+  test "Changing a sphere's transformation":
+    var
+      s = sphere()
+      t = translation(2, 3, 4)
 
-  #test "Intersecting a translated sphere with a ray":
-  # var
-  # r ← ray(point(0, 0, -5), vector(0, 0, 1))
-    #And s ← sphere()
-  #When set_transform(translation(5, 0, 0))
-    #And xs ← s.intersect(r)
-  #Then xs.len = 0
+    s.transformation = t
+    check(s.transformation == t)
+
+  test "Intersecting a scaled sphere with a ray":
+    var
+      r = ray(point(0, 0, -5), vector(0, 0, 1))
+      s = sphere()
+
+    s.transformation = scaling(2, 2, 2)
+
+    var xs = r.intersect(s)
+
+    check(xs.len == 2)
+    check(xs[0].t == 3)
+    check(xs[1].t == 7)
+
+  test "Intersecting a translated sphere with a ray":
+    var
+      r = ray(point(0, 0, -5), vector(0, 0, 1))
+      s = sphere()
+
+    s.transformation = translation(5, 0, 0)
+
+    check(r.intersect(s).len == 0)
 
   #test "The normal on a sphere at a point on the x axis":
   # var
@@ -156,6 +162,6 @@ suite "Spheres":
   #test "A helper for producing a sphere with a glassy material":
   # var
   # s ← glass_sphere()
-  #Then s.transform = identity_matrix
+  #Then s.transformation = identity(4)
     #And s.material.transparency = 1.0
     #And s.material.refractive_index = 1.5
