@@ -80,6 +80,9 @@ proc dot*(v: Vector, v1: Vector): float64 =
 proc cross*(v: Vector, v1: Vector): Vector =
   vector(v.y * v1.z - v.z * v1.y, v.z * v1.x - v.x * v1.z, v.x * v1.y - v.y * v1.x)
 
+proc `-`*(t1, t2: Point): Vector =
+  Vector(x: t1.x - t2.x, y: t1.y - t2.y, z: t1.z - t2.z, w: t1.w - t2.w)
+
 proc `+`*(c1, c2: Color): Color =
   (red: c1.red + c2.red, green: c1.green + c2.green, blue: c1.blue + c2.blue)
 
