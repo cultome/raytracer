@@ -6,32 +6,31 @@ import raytracerpkg/transformations
 import raytracerpkg/spheres
 
 suite "Spheres":
-
   test "A ray intersects a sphere at two points":
     var
       r = ray(point(0, 0, -5), vector(0, 0, 1))
       s = sphere()
-      xs = s.intersect(r)
+      xs = r.intersect(s)
 
     check(xs.len == 2)
-    check(xs[0] == 4.0)
-    check(xs[1] == 6.0)
+    check(xs[0].t == 4.0)
+    check(xs[1].t == 6.0)
 
   test "A ray intersects a sphere at a tangent":
     var
       r = ray(point(0, 1, -5), vector(0, 0, 1))
       s = sphere()
-      xs = s.intersect(r)
+      xs = r.intersect(s)
 
     check(xs.len == 2)
-    check(xs[0] == 5.0)
-    check(xs[1] == 5.0)
+    check(xs[0].t == 5.0)
+    check(xs[1].t == 5.0)
 
   test "A ray misses a sphere":
     var
       r = ray(point(0, 2, -5), vector(0, 0, 1))
       s = sphere()
-      xs = s.intersect(r)
+      xs = r.intersect(s)
 
     check(xs.len == 0)
 
@@ -39,30 +38,31 @@ suite "Spheres":
     var
       r = ray(point(0, 0, 0), vector(0, 0, 1))
       s = sphere()
-      xs = s.intersect(r)
+      xs = r.intersect(s)
 
     check(xs.len == 2)
-    check(xs[0] == -1.0)
-    check(xs[1] == 1.0)
+    check(xs[0].t == -1.0)
+    check(xs[1].t == 1.0)
 
   test "A sphere is behind a ray":
     var
       r = ray(point(0, 0, 5), vector(0, 0, 1))
       s = sphere()
-      xs = s.intersect(r)
+      xs = r.intersect(s)
 
     check(xs.len == 2)
-    check(xs[0] == -6.0)
-    check(xs[1] == -4.0)
+    check(xs[0].t == -6.0)
+    check(xs[1].t == -4.0)
 
-  #test "Intersect sets the object on the intersection":
-  # var
-  # r ← ray(point(0, 0, -5), vector(0, 0, 1))
-    #And s ← sphere()
-  #When xs ← s.intersect(
-  #Then xs.len = 2
-    #And xs[0].object = s
-    #And xs[1].object = s
+  test "Intersect sets the object on the intersection":
+    var
+      r = ray(point(0, 0, -5), vector(0, 0, 1))
+      s = sphere()
+      xs = r.intersect(s)
+
+    check(xs.len == 2)
+    check(xs[0].obj == s)
+    check(xs[1].obj == s)
 
   #test "A sphere's default transformation":
   # var
