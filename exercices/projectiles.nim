@@ -1,5 +1,4 @@
 import raytracerpkg/tuples
-import strutils
 import gnuplot
 
 type

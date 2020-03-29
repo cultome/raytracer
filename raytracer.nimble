@@ -7,4 +7,3 @@ installExt    = @["nim"]
 bin           = @["raytracer"]
 
 requires "nim >= 1.0.6"
-requires "gnuplot >= 0.6"

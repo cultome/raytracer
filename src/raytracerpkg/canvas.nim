@@ -1,5 +1,4 @@
 import strutils
-import sequtils
 
 import raytracerpkg/tuples
 
@@ -44,7 +43,6 @@ proc normalizeColor(val: float64): int =
 proc toPpm*(c: Canvas): string =
   let header = "P3\n$1 $2\n255" % [$c.width, $c.height]
   var
-    content: string
     lines = @[""]
     currLine = 0
     normalized: string

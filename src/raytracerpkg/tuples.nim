@@ -1,5 +1,4 @@
 import math
-import strutils
 
 type
   Tuple* = ref object of RootObj
