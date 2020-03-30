@@ -57,7 +57,7 @@ proc point*(x, y, z: int32): Point =
 proc point*(x, y, z: float64): Point =
   Point(x: x, y: y, z: z, w: 1.0.float64)
 
-proc vector*(x, y, z: int32): Vector =
+proc vector*(x, y, z: int): Vector =
   Vector(x: x.float64, y: y.float64, z: z.float64, w: 0.0.float64)
 
 proc vector*(x, y, z: float64): Vector =
