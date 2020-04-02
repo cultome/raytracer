@@ -64,3 +64,6 @@ proc toPpm*(c: Canvas): string =
     currLine += 1
 
   header & "\n" & lines.join("\n")
+
+proc save*(c: Canvas, filename: string) =
+  writeFile(filename, c.toPpm)
