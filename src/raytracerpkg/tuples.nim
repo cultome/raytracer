@@ -81,6 +81,9 @@ proc dot*(v: Vector, v1: Vector): float64 =
 proc cross*(v: Vector, v1: Vector): Vector =
   initVector(v.y * v1.z - v.z * v1.y, v.z * v1.x - v.x * v1.z, v.x * v1.y - v.y * v1.x)
 
+proc reflect*(v: Vector, normal: Vector): Vector =
+  v - normal * 2 * v.dot(normal)
+
 proc `-`*(t1, t2: Point): Vector =
   Vector(x: t1.x - t2.x, y: t1.y - t2.y, z: t1.z - t2.z, w: t1.w - t2.w)
 

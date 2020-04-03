@@ -172,3 +172,19 @@ suite "tuples features":
       c2 = initColor(0.9, 1, 0.1)
 
     check(c1 * c2 == initColor(0.9, 0.2, 0.04))
+
+  test "Reflecting a vector approaching at 45°":
+    var
+      v = initVector(1, -1, 0)
+      n = initVector(0, 1, 0)
+      r = v.reflect(n)
+
+    check(r == initVector(1, 1, 0))
+
+  test "Reflecting a vector off a slanted surface":
+    var
+      v = initVector(0, -1, 0)
+      n = initVector(sqrt(2.0)/2, sqrt(2.0)/2, 0)
+      r = v.reflect(n)
+
+    check(r == initVector(1, 0, 0))

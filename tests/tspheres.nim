@@ -6,6 +6,7 @@ import raytracerpkg/tuples
 import raytracerpkg/matrices
 import raytracerpkg/transformations
 import raytracerpkg/spheres
+import raytracerpkg/materials
 
 suite "Spheres":
   test "A ray intersects a sphere at two points":
@@ -145,19 +146,22 @@ suite "Spheres":
 
     check(n == initVector(0, 0.97014, -0.24254))
 
-  #test "A sphere has a default material":
-  #var
-  #s ← initSphere()
-  #When m ← s.material
-  #Then m = material()
+  test "A sphere has a default material":
+    var
+      s = initSphere()
+      m = s.material
 
-  #test "A sphere may be assigned a material":
-  # var
-  # s ← initSphere()
-    #And m ← material()
-    #And m.ambient ← 1
-  #When s.material ← m
-  #Then s.material = m
+    check(m == initMaterial())
+
+  test "A sphere may be assigned a material":
+    var
+      s = initSphere()
+      m = initMaterial()
+
+    m.ambient = 1
+    s.material = m
+
+    check(s.material == m)
 
   #test "A helper for producing a sphere with a glassy material":
   # var

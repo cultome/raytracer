@@ -1,15 +1,20 @@
 import raytracerpkg/matrices
 import raytracerpkg/tuples
+import raytracerpkg/materials
 
 type
   Sphere* = ref object
     transformation*: Matrix
+    material*: Material
+
+proc initSphere*(transformation: Matrix, material: Material): Sphere =
+  Sphere(transformation: transformation, material: material)
 
 proc initSphere*(transformation: Matrix): Sphere =
-  Sphere(transformation: transformation)
+  initSphere(transformation, initMaterial())
 
 proc initSphere*(): Sphere =
-  initSphere(identity(4))
+  initSphere(identity(4), initMaterial())
 
 proc normalAt*(s: Sphere, p: Point): Vector =
   var
