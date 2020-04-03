@@ -130,7 +130,7 @@ proc inverse*(m: Matrix): Matrix =
 proc at*(m: Matrix, y, x: int): float64 =
   m[y][x]
 
-proc `*`*(m: Matrix, t: Tuple): Tuple =
+proc `*`*[T](m: Matrix, t: T): T =
   if m.len != 4 or m[0].len != 4:
     raise newException(ValueError, "Matrix should have 4 rows")
 
@@ -139,7 +139,7 @@ proc `*`*(m: Matrix, t: Tuple): Tuple =
   for idx in 0..3:
     acc[idx] = m[idx][0] * t.x + m[idx][1] * t.y + m[idx][2] * t.z + m[idx][3] * t.w
 
-  tp(acc[0], acc[1], acc[2], acc[3])
+  T(x: acc[0], y: acc[1], z: acc[2], w: acc[3])
 
 proc `*`*(m1, m2: Matrix): Matrix =
   if m1.len != m2[0].len:

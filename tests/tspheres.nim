@@ -136,25 +136,25 @@ suite "Spheres":
 
     check(n == normalize(n))
 
-  #test "Computing the normal on a translated sphere":
-    #var s = sphere()
+  test "Computing the normal on a translated sphere":
+    var s = sphere()
 
-    #s.transformation = translation(0, 1, 0)
+    s.transformation = translation(0, 1, 0)
 
-    #var n = s.normalAt(point(0, 1.70711, -0.70711))
+    var n = s.normalAt(point(0, 1.70711, -0.70711))
 
-    #check(n == vector(0, 0.70711, -0.70711))
+    check(n == vector(0, 0.70711, -0.70711))
 
-  #test "Computing the normal on a transformed sphere":
-    #var
-      #s = sphere()
-      #m = scaling(1, 0.5, 1) * rotation(axisZ, PI/5)
+  test "Computing the normal on a transformed sphere":
+    var
+      s = sphere()
+      m = scaling(1, 0.5, 1) * rotation(axisZ, PI/5)
 
-    #s.transformation = m
+    s.transformation = m
 
-    #var n = s.normalAt(point(0, sqrt(2.0)/2, -sqrt(2.0)/2))
+    var n = s.normalAt(point(0, sqrt(2.0)/2, -sqrt(2.0)/2))
 
-    #check(n == vector(0, 0.97014, -0.24254))
+    check(n == vector(0, 0.97014, -0.24254))
 
   #test "A sphere has a default material":
   #var
