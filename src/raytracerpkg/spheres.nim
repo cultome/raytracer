@@ -5,8 +5,11 @@ type
   Sphere* = ref object
     transformation*: Matrix
 
-proc sphere*(): Sphere =
-  Sphere(transformation: identity(4))
+proc initSphere*(transformation: Matrix): Sphere =
+  Sphere(transformation: transformation)
+
+proc initSphere*(): Sphere =
+  initSphere(identity(4))
 
 proc normalAt*(s: Sphere, p: Point): Vector =
   var

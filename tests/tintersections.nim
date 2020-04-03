@@ -7,7 +7,7 @@ import raytracerpkg/intersections
 suite "Intersections":
   test "An intersection encapsulates t and object":
     var
-      s = sphere()
+      s = initSphere()
       i = initIntersection(3.5, s)
 
     check(i.t == 3.5)
@@ -15,7 +15,7 @@ suite "Intersections":
 
   test "Aggregating intersections":
     var
-      s = sphere()
+      s = initSphere()
       i1 = initIntersection(1, s)
       i2 = initIntersection(2, s)
       xs = intersections(i1, i2)
@@ -26,7 +26,7 @@ suite "Intersections":
 
   test "The hit, when all intersections have positive t":
     var
-      s = sphere()
+      s = initSphere()
       i1 = initIntersection(1, s)
       i2 = initIntersection(2, s)
       xs = intersections(i2, i1)
@@ -36,7 +36,7 @@ suite "Intersections":
 
   test "The hit, when some intersections have negative t":
     var
-      s = sphere()
+      s = initSphere()
       i1 = initIntersection(-1, s)
       i2 = initIntersection(1, s)
       xs = intersections(i2, i1)
@@ -46,7 +46,7 @@ suite "Intersections":
 
   test "The hit, when all intersections have negative t":
     var
-      s = sphere()
+      s = initSphere()
       i1 = initIntersection(-2, s)
       i2 = initIntersection(-1, s)
       xs = intersections(i2, i1)
@@ -56,7 +56,7 @@ suite "Intersections":
 
   test "The hit is always the lowest nonnegative intersection":
     var
-      s = sphere()
+      s = initSphere()
       i1 = initIntersection(5, s)
       i2 = initIntersection(7, s)
       i3 = initIntersection(-3, s)
@@ -69,7 +69,7 @@ suite "Intersections":
   #test "Precomputing the state of an intersection":
   #var
     #r ← ray(initPoint(0, 0, -5), initVector(0, 0, 1))
-    #And shape ← sphere()
+    #And shape ← initSphere()
     #And i ← initIntersection(4, shape)
   #When comps ← prepare_computations(i, r)
   #Then comps.t = i.t
@@ -89,7 +89,7 @@ suite "Intersections":
   #test "The hit, when an initIntersection occurs on the outside":
   #var
     #r ← ray(initPoint(0, 0, -5), initVector(0, 0, 1))
-    #And shape ← sphere()
+    #And shape ← initSphere()
     #And i ← initIntersection(4, shape)
   #When comps ← prepare_computations(i, r)
   #Then comps.inside = false
@@ -97,7 +97,7 @@ suite "Intersections":
   #test "The hit, when an intersection occurs on the inside":
   #var
     #r ← ray(initPoint(0, 0, 0), initVector(0, 0, 1))
-    #And shape ← sphere()
+    #And shape ← initSphere()
     #And i ← initIntersection(1, shape)
   #When comps ← prepare_computations(i, r)
   #Then comps.point = initPoint(0, 0, 1)
@@ -109,7 +109,7 @@ suite "Intersections":
   #test "The hit should offset the point":
   #var
     #r ← ray(initPoint(0, 0, -5), initVector(0, 0, 1))
-    #And shape ← sphere() with:
+    #And shape ← initSphere() with:
       #| transform | translation(0, 0, 1) |
     #And i ← initIntersection(5, shape)
   #When comps ← prepare_computations(i, r)

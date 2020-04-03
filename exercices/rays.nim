@@ -10,7 +10,7 @@ var
   canvasSize = 100
   pixelSize = wallSize / canvasSize
   camera = initPoint(0, 0, -5)
-  shape = sphere()
+  shape = initSphere()
   canva = initCanvas(canvasSize, canvasSize)
   color = initColor(1, 1, 1)
   source: Ray
