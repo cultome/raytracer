@@ -5,7 +5,7 @@ import raytracerpkg/matrices
 
 suite "matrices features":
   test "contructing and inspecting a 4x4 matrix":
-    var m = matrix(
+    var m = initMatrix(
       @[1.0, 2.0, 3.0, 4.0],
       @[5.5, 6.5, 7.5, 8.5],
       @[9.0, 10.0, 11.0, 12.0],
@@ -21,7 +21,7 @@ suite "matrices features":
     check(m.at(3,2) == 15.5)
 
   test "a 2x2 matrix ought to be representable":
-    var m = matrix(
+    var m = initMatrix(
       @[-3.0, 5.0],
       @[1.0, -2.0],
     )
@@ -32,7 +32,7 @@ suite "matrices features":
     check(m.at(1,1) == -2.0)
 
   test "a 3x3 matrix ought to be representable":
-    var m = matrix(
+    var m = initMatrix(
       @[-3.0, 5.0, 0.0],
       @[1.0, -2.0, -7],
       @[0.0, 1.0, 1.0],
@@ -44,14 +44,14 @@ suite "matrices features":
 
   test "matrix equiality with identical matrices":
     var
-      m1 = matrix(
+      m1 = initMatrix(
         @[1.0, 2.0, 3.0, 4.0],
         @[5.0, 6.0, 7.0, 8.0],
         @[9.0, 8.0, 7.0, 6.0],
         @[5.0, 4.0, 3.0, 2.0],
       )
 
-      m2 = matrix(
+      m2 = initMatrix(
         @[1.0, 2.0, 3.0, 4.0],
         @[5.0, 6.0, 7.0, 8.0],
         @[9.0, 8.0, 7.0, 6.0],
@@ -62,14 +62,14 @@ suite "matrices features":
 
   test "matrix equiality with differences matrices":
     var
-      m1 = matrix(
+      m1 = initMatrix(
         @[1.0, 2.0, 3.0, 4.0],
         @[5.0, 6.0, 7.0, 8.0],
         @[9.0, 8.0, 7.0, 6.0],
         @[5.0, 4.0, 3.0, 2.0],
       )
 
-      m2 = matrix(
+      m2 = initMatrix(
         @[2.0, 3.0, 4.0, 5.0],
         @[6.0, 7.0, 8.0, 9.0],
         @[8.0, 7.0, 6.0, 5.0],
@@ -80,21 +80,21 @@ suite "matrices features":
 
   test "multiplying two matrices":
     var
-      m1 = matrix(
+      m1 = initMatrix(
         @[1.0, 2.0, 3.0, 4.0],
         @[5.0, 6.0, 7.0, 8.0],
         @[9.0, 8.0, 7.0, 6.0],
         @[5.0, 4.0, 3.0, 2.0],
       )
 
-      m2 = matrix(
+      m2 = initMatrix(
         @[-2.0, 1.0, 2.0, 3.0],
         @[3.0, 2.0, 1.0, -1.0],
         @[4.0, 3.0, 6.0, 5.0],
         @[1.0, 2.0, 7.0, 8.0],
       )
 
-      r = matrix(
+      r = initMatrix(
         @[20.0, 22.0,  50.0,  48.0],
         @[44.0, 54.0, 114.0, 108.0],
         @[40.0, 58.0, 110.0, 102.0],
@@ -105,19 +105,19 @@ suite "matrices features":
 
   test "multiplying a matrix by a tuple":
     var
-      m = matrix(
+      m = initMatrix(
         @[1.0, 2.0, 3.0, 4.0,],
         @[2.0, 4.0, 4.0, 2.0,],
         @[8.0, 6.0, 4.0, 1.0,],
         @[0.0, 0.0, 0.0, 1.0,],
       )
 
-      t = tp(1, 2, 3, 1)
+      t = initTuple(1, 2, 3, 1)
 
-    check(m * t == tp(18, 24, 33, 1))
+    check(m * t == initTuple(18, 24, 33, 1))
 
   test "Multiplying a matrix by the identity matrix":
-    var m = matrix(
+    var m = initMatrix(
       @[0.0, 1.0, 2.0, 4.0],
       @[1.0, 2.0, 4.0, 8.0],
       @[2.0, 4.0, 8.0, 16.0],
@@ -127,20 +127,20 @@ suite "matrices features":
     check(m * identity(4) == m)
 
   test "Multiplying the identity matrix by a tuple":
-    var t = tp(1, 2, 3, 4)
+    var t = initTuple(1, 2, 3, 4)
 
     check(identity(4) * t == t)
 
   test "Scenario: Transposing a matrix":
     var
-      m = matrix(
+      m = initMatrix(
         @[0.0, 9.0, 3.0, 0.0],
         @[9.0, 8.0, 0.0, 8.0],
         @[1.0, 8.0, 5.0, 3.0],
         @[0.0, 0.0, 5.0, 8.0],
       )
 
-      r = matrix(
+      r = initMatrix(
         @[0.0, 9.0, 1.0, 0.0],
         @[9.0, 8.0, 8.0, 0.0],
         @[3.0, 0.0, 5.0, 5.0],
@@ -155,7 +155,7 @@ suite "matrices features":
     check(id.transpose == id)
 
   test "Calculating the determinant of a 2x2 matrix":
-    var m = matrix(
+    var m = initMatrix(
       @[1.0, 5.0],
       @[-3.0, 2.0],
     )
@@ -164,13 +164,13 @@ suite "matrices features":
 
   test "A submatrix of a 3x3 matrix is a 2x2 matrix":
     var
-      m = matrix(
+      m = initMatrix(
         @[1.0, 5.0, 0.0],
         @[-3.0, 2.0, 7.0],
         @[0.0, 6.0, -3.0],
       )
 
-      s = matrix(
+      s = initMatrix(
         @[-3.0, 2.0],
         @[0.0, 6.0],
       )
@@ -179,14 +179,14 @@ suite "matrices features":
 
   test "A submatrix of a 4x4 matrix is a 3x3 matrix":
     var
-      m = matrix(
+      m = initMatrix(
         @[-6.0, 1.0, 1, 6.0],
         @[-8.0, 5.0, 8, 6.0],
         @[-1.0, 0.0, 8, 2.0],
         @[-7.0, 1.0, -1.0, 1.0],
       )
 
-      s = matrix(
+      s = initMatrix(
         @[-6.0, 1.0, 6.0,],
         @[-8.0, 8.0, 6.0,],
         @[-7.0, -1.0, 1.0,],
@@ -196,7 +196,7 @@ suite "matrices features":
 
   test "Calculating a minor of a 3x3 matrix":
     var
-      m = matrix(
+      m = initMatrix(
         @[3.0, 5.0, 0.0],
         @[2.0, -1.0, -7.0],
         @[6.0, -1.0, 5.0],
@@ -208,7 +208,7 @@ suite "matrices features":
     check(m.minor(1, 0) == 25)
 
   test "Calculating a cofactor of a 3x3 matrix":
-    var m = matrix(
+    var m = initMatrix(
       @[3.0, 5.0, 0.0],
       @[2.0, -1.0, -7.0],
       @[6.0, -1.0,  5.0],
@@ -221,7 +221,7 @@ suite "matrices features":
     check(m.cofactor(1, 0) == -25.0)
 
   test "Calculating the determinant of a 3x3 matrix":
-    var m = matrix(
+    var m = initMatrix(
       @[1.0, 2.0, 6.0],
       @[-5.0, 8.0,-4.0],
       @[2.0, 6.0, 4.0],
@@ -233,7 +233,7 @@ suite "matrices features":
     check(m.determinant == -196.0)
 
   test "Calculating the determinant of a 4x4 matrix":
-    var m = matrix(
+    var m = initMatrix(
       @[-2.0, -8.0, 3.0, 5.0],
       @[-3.0, 1.0, 7.0, 3.0],
       @[1.0, 2.0, -9.0, 6.0],
@@ -247,7 +247,7 @@ suite "matrices features":
     check(m.determinant == -4071.0)
 
   test "Testing an invertible matrix for invertibility":
-    var m = matrix(
+    var m = initMatrix(
       @[6.0,  4.0,  4.0,  4.0],
       @[5.0,  5.0,  7.0,  6.0],
       @[4.0, -9.0,  3.0, -7.0],
@@ -257,7 +257,7 @@ suite "matrices features":
     check(m.determinant == -2120.0)
 
   test "Testing a noninvertible matrix for invertibility":
-    var m = matrix(
+    var m = initMatrix(
       @[-4.0, 2.0, -2.0, -3.0],
       @[9.0, 6.0, 2.0, 6.0],
       @[0.0, -5.0, 1.0, -5.0],
@@ -268,7 +268,7 @@ suite "matrices features":
 
   test "Calculating the inverse of a matrix":
     var
-      m = matrix(
+      m = initMatrix(
         @[-5.0, 2.0, 6.0, -8.0],
         @[1.0, -5.0, 1.0, 8.0],
         @[7.0, 7.0, -6.0, -7.0],
@@ -277,7 +277,7 @@ suite "matrices features":
 
       r = m.inverse
 
-      i = matrix(
+      i = initMatrix(
         @[0.218050, 0.45113, 0.24060, -0.04511],
         @[-0.80827, -1.45677, -0.44361, 0.52068],
         @[-0.07895, -0.22368, -0.05263, 0.19737],
@@ -293,14 +293,14 @@ suite "matrices features":
 
   test "Calculating the inverse of another matrix":
     var
-      m = matrix(
+      m = initMatrix(
         @[8.0, -5.0, 9.0, 2.0],
         @[7.0, 5.0, 6.0, 1.0],
         @[-6.0, 0.0, 9.0, 6.0],
         @[-3.0, 0.0, -9.0, -4.0],
       )
 
-      i = matrix(
+      i = initMatrix(
         @[-0.15385, -0.15385, -0.28205, -0.53846],
         @[-0.07692, 0.12308, 0.02564, 0.03077],
         @[0.35897, 0.35897, 0.43590, 0.92308],
@@ -311,14 +311,14 @@ suite "matrices features":
 
   test "Calculating the inverse of a third matrix":
     var
-      m = matrix(
+      m = initMatrix(
         @[9.0,  3.0,  0.0,  9.0],
         @[-5.0, -2.0, -6.0, -3.0],
         @[-4.0,  9.0,  6.0,  4.0],
         @[-7.0,  6.0,  6.0,  2.0],
       )
 
-      i = matrix(
+      i = initMatrix(
         @[-0.04074, -0.07778,  0.14444, -0.22222],
         @[-0.07778,  0.03333,  0.36667, -0.33333],
         @[-0.02901, -0.14630, -0.10926,  0.12963],
@@ -329,14 +329,14 @@ suite "matrices features":
 
   test "Multiplying a product by its inverse":
     var
-      m1 = matrix(
+      m1 = initMatrix(
         @[3.0, -9.0, 7.0, 3.0],
         @[3.0, -8.0, 2.0, -9.0],
         @[-4.0, 4.0, 4.0, 1.0],
         @[-6.0, 5.0, -1.0, 1.0],
       )
 
-      m2 = matrix(
+      m2 = initMatrix(
         @[8.0, 2.0, 2.0, 2.0],
         @[3.0, -1.0, 7.0, 0.0],
         @[7.0, 0.0, 5.0, 4.0],

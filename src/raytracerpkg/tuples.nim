@@ -45,25 +45,25 @@ template `$`*(a: Tuple): string =
   "($1, $2, $3, $4)" % [$a.x, $a.y, $a.z, $a.w]
 
 # constructors
-proc tp*(x, y, z, w: int32): Tuple =
+proc initTuple*(x, y, z, w: int32): Tuple =
   Tuple(x: x.float64, y: y.float64, z: z.float64, w: w.float64)
 
-proc tp*(x, y, z, w: float64): Tuple =
+proc initTuple*(x, y, z, w: float64): Tuple =
   Tuple(x: x, y: y, z: z, w: w)
 
-proc point*(x, y, z: int32): Point =
+proc initPoint*(x, y, z: int32): Point =
   Point(x: x.float64, y: y.float64, z: z.float64, w: 1.0.float64)
 
-proc point*(x, y, z: float64): Point =
+proc initPoint*(x, y, z: float64): Point =
   Point(x: x, y: y, z: z, w: 1.0.float64)
 
-proc vector*(x, y, z: int): Vector =
+proc initVector*(x, y, z: int): Vector =
   Vector(x: x.float64, y: y.float64, z: z.float64, w: 0.0.float64)
 
-proc vector*(x, y, z: float64): Vector =
+proc initVector*(x, y, z: float64): Vector =
   Vector(x: x, y: y, z: z, w: 0.0.float64)
 
-proc color*(red, green, blue: float64): Color =
+proc initColor*(red, green, blue: float64): Color =
   (red: red, green: green, blue: blue)
 
 # functions
@@ -79,7 +79,7 @@ proc dot*(v: Vector, v1: Vector): float64 =
   v.x * v1.x + v.y * v1.y + v.z * v1.z + v.w * v1.w
 
 proc cross*(v: Vector, v1: Vector): Vector =
-  vector(v.y * v1.z - v.z * v1.y, v.z * v1.x - v.x * v1.z, v.x * v1.y - v.y * v1.x)
+  initVector(v.y * v1.z - v.z * v1.y, v.z * v1.x - v.x * v1.z, v.x * v1.y - v.y * v1.x)
 
 proc `-`*(t1, t2: Point): Vector =
   Vector(x: t1.x - t2.x, y: t1.y - t2.y, z: t1.z - t2.z, w: t1.w - t2.w)

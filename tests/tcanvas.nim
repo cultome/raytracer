@@ -6,16 +6,15 @@ import raytracerpkg/tuples
 
 suite "canvas features":
   test "creating a canvas":
-    var c = canvas(10, 20)
+    var c = initCanvas(10, 20)
 
     check(c.width == 10)
     check(c.height == 20)
-    # ... and every pixel is color(0, 0, 0)
 
   test "write pixels to canvas":
     var
-      c = canvas(10, 20)
-      r = color(1, 0, 0)
+      c = initCanvas(10, 20)
+      r = initColor(1, 0, 0)
 
     c.writePixel(2, 3, r)
 
@@ -23,7 +22,7 @@ suite "canvas features":
 
   test "construct the PPM header":
     var
-      c = canvas(5, 3)
+      c = initCanvas(5, 3)
       ppm = c.toPpm
       lns = ppm.split("\n")
 
@@ -33,10 +32,10 @@ suite "canvas features":
 
   test "constructing the ppm pixel data":
     var
-      c = canvas(5, 3)
-      c1 = color(1.5, 0, 0)
-      c2 = color(0, 0.5, 0)
-      c3 = color(-0.5, 0, 1)
+      c = initCanvas(5, 3)
+      c1 = initColor(1.5, 0, 0)
+      c2 = initColor(0, 0.5, 0)
+      c3 = initColor(-0.5, 0, 1)
 
     c.writePixel(0, 0, c1)
     c.writePixel(2, 1, c2)
@@ -52,8 +51,8 @@ suite "canvas features":
 
   test "spliting long lines in PPM files":
     var
-      c1 = color(1, 0.8, 0.6)
-      c = canvas(10, 2, c1)
+      c1 = initColor(1, 0.8, 0.6)
+      c = initCanvas(10, 2, c1)
       ppm = c.toPpm
       lns = ppm.split("\n")
 
@@ -64,7 +63,7 @@ suite "canvas features":
 
   test "PPM files are terminated by a newline character":
     var
-      c = canvas(5, 3)
+      c = initCanvas(5, 3)
       ppm = c.toPpm
       lns = ppm.split("\n")
 

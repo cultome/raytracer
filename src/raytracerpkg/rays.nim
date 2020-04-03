@@ -26,7 +26,7 @@ proc transform*(r: Ray, transformation: Matrix): Ray =
 proc intersect*(r: Ray, s: Sphere): seq[Intersection] =
   var
     tr = r.transform(s.transformation.inverse)
-    sphereToRay = tr.origin - point(0, 0, 0)
+    sphereToRay = tr.origin - initPoint(0, 0, 0)
     a = tr.direction.dot(tr.direction)
     b = 2 * tr.direction.dot(sphereToRay)
     c = sphereToRay.dot(sphereToRay) - 1
@@ -39,4 +39,4 @@ proc intersect*(r: Ray, s: Sphere): seq[Intersection] =
     t1 = ((-b) - sqrt(discriminant)) / (2 * a)
     t2 = ((-b) + sqrt(discriminant)) / (2 * a)
 
-  @[intersection(t1, s), intersection(t2, s)]
+  @[initIntersection(t1, s), initIntersection(t2, s)]

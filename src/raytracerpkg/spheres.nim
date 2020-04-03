@@ -11,7 +11,7 @@ proc sphere*(): Sphere =
 proc normalAt*(s: Sphere, p: Point): Vector =
   var
     objPoint = s.transformation.inverse * p
-    objNormal = objPoint - point(0, 0, 0)
+    objNormal = objPoint - initPoint(0, 0, 0)
     worldNormal = s.transformation.inverse.transpose * objNormal
 
   worldNormal.w = 0

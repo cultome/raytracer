@@ -18,7 +18,7 @@ proc `==`*(a, b: Intersection): bool =
 proc `$`*(a: Intersection): string =
   "(t: $1, obj: $2)" % [$a.t, $type(a.obj)]
 
-proc intersection*(t: float64, obj: Sphere): Intersection =
+proc initIntersection*(t: float64, obj: Sphere): Intersection =
   Intersection(t: t, obj: obj)
 
 proc intersections*(intersections: varargs[Intersection]): seq[Intersection] =

@@ -19,12 +19,12 @@ proc `==`*(a, b: Matrix): bool =
 
   return true
 
-proc matrix*(cols: varargs[seq[int]]): Matrix =
+proc initMatrix*(cols: varargs[seq[int]]): Matrix =
   @cols.map(proc (row: seq[int]): seq[float64] =
     row.mapIt( float64(it) )
   )
 
-proc matrix*(cols: varargs[seq[float64]]): Matrix =
+proc initMatrix*(cols: varargs[seq[float64]]): Matrix =
   @cols
 
 proc identity*(size: int): Matrix =
@@ -43,7 +43,7 @@ proc identity*(size: int): Matrix =
 
     cols.add(col)
 
-  matrix(cols)
+  initMatrix(cols)
 
 proc filledMatrix*(rowNum, colNum: int, defaultValue: float64): Matrix =
   var
@@ -58,7 +58,7 @@ proc filledMatrix*(rowNum, colNum: int, defaultValue: float64): Matrix =
 
     cols.add(col)
 
-  matrix(cols)
+  initMatrix(cols)
 
 proc submatrix*(m: Matrix, row, col: int): Matrix =
   var

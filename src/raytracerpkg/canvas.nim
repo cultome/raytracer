@@ -8,7 +8,7 @@ type
     height*: int
     pixels*: seq[seq[Color]] # pixels[y][x]
 
-proc canvas*(width, height: int, color: Color): Canvas =
+proc initCanvas*(width, height: int, color: Color): Canvas =
   var
     pixels: seq[seq[Color]]
     col: seq[Color]
@@ -23,8 +23,8 @@ proc canvas*(width, height: int, color: Color): Canvas =
 
   Canvas(width: width, height: height, pixels: pixels)
 
-proc canvas*(width, height: int): Canvas =
-  canvas(width, height, color(0, 0, 0))
+proc initCanvas*(width, height: int): Canvas =
+  initCanvas(width, height, initColor(0, 0, 0))
 
 proc writePixel*(c: Canvas, x, y: int, color: Color) =
   c.pixels[y][x] = color

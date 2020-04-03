@@ -9,7 +9,7 @@ echo id.inverse.print(1)
 
 echo "Same? " & $(id.inverse == id)
 
-var m1 = matrix(
+var m1 = initMatrix(
   @[3.0, -9.0, 7.0, 3.0],
   @[3.0, -8.0, 2.0, -9.0],
   @[-4.0, 4.0, 4.0, 1.0],

@@ -36,6 +36,6 @@ proc launch*(position: Point, velocity: Vector, gravity: Vector, wind: Vector): 
   (xs, ys)
 
 when isMainModule:
-  let (xs, ys) = launch(point(0, 1, 0), vector(1, 1, 0), vector(0, -0.1, 0), vector(-0.01, 0, 0))
+  let (xs, ys) = launch(initPoint(0, 1, 0), initVector(1, 1, 0), initVector(0, -0.1, 0), initVector(-0.01, 0, 0))
   plot xs, ys, "X Y"
   discard readChar stdin

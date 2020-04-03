@@ -9,16 +9,16 @@ var
   halfWall = wallSize.float64 / 2.0
   canvasSize = 100
   pixelSize = wallSize / canvasSize
-  camera = point(0, 0, -5)
+  camera = initPoint(0, 0, -5)
   shape = sphere()
-  canva = canvas(canvasSize, canvasSize)
-  color = color(1, 1, 1)
+  canva = initCanvas(canvasSize, canvasSize)
+  color = initColor(1, 1, 1)
   source: Ray
   sourceVector: Vector
 
 for y in 0..<canvasSize:
   for x in 0..<canvasSize:
-    sourceVector = point(-halfWall + x.float64 * pixelSize, halfWall - y.float64 * pixelSize, wallZ) - camera
+    sourceVector = initPoint(-halfWall + x.float64 * pixelSize, halfWall - y.float64 * pixelSize, wallZ) - camera
     source = ray(camera, sourceVector)
 
     if source.intersect(shape).len > 0:
