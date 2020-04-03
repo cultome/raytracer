@@ -1,4 +1,5 @@
 import unittest
+import math
 
 import raytracerpkg/rays
 import raytracerpkg/tuples
@@ -100,54 +101,64 @@ suite "Spheres":
 
     check(r.intersect(s).len == 0)
 
-  #test "The normal on a sphere at a point on the x axis":
-  # var
-  # s ← sphere()
-  #When n ← normal_at(point(1, 0, 0))
-  #Then n = vector(1, 0, 0)
+  test "The normal on a sphere at a point on the x axis":
+    var
+      s = sphere()
+      n = s.normalAt(point(1, 0, 0))
 
-  #test "The normal on a sphere at a point on the y axis":
-  # var
-  # s ← sphere()
-  #When n ← normal_at(point(0, 1, 0))
-  #Then n = vector(0, 1, 0)
+    check(n == vector(1, 0, 0))
 
-  #test "The normal on a sphere at a point on the z axis":
-  # var
-  # s ← sphere()
-  #When n ← normal_at(point(0, 0, 1))
-  #Then n = vector(0, 0, 1)
+  test "The normal on a sphere at a point on the y axis":
+    var
+      s = sphere()
+      n = s.normalAt(point(0, 1, 0))
 
-  #test "The normal on a sphere at a nonaxial point":
-  # var
-  # s ← sphere()
-  #When n ← normal_at(point(√3/3, √3/3, √3/3))
-  #Then n = vector(√3/3, √3/3, √3/3)
+    check(n == vector(0, 1, 0))
 
-  #test "The normal is a normalized vector":
-  # var
-  # s ← sphere()
-  #When n ← normal_at(point(√3/3, √3/3, √3/3))
-  #Then n = normalize(n)
+  test "The normal on a sphere at a point on the z axis":
+    var
+      s = sphere()
+      n = s.normalAt(point(0, 0, 1))
+
+    check(n == vector(0, 0, 1))
+
+  test "The normal on a sphere at a nonaxial point":
+    var
+      s = sphere()
+      n = s.normalAt(point(sqrt(3.0)/3, sqrt(3.0)/3, sqrt(3.0)/3))
+
+    check(n == vector(sqrt(3.0)/3, sqrt(3.0)/3, sqrt(3.0)/3))
+
+  test "The normal is a normalized vector":
+    var
+      s = sphere()
+      n = s.normalAt(point(sqrt(3.0)/3, sqrt(3.0)/3, sqrt(3.0)/3))
+
+    check(n == normalize(n))
 
   #test "Computing the normal on a translated sphere":
-  # var
-  # s ← sphere()
-    #And set_transform(translation(0, 1, 0))
-  #When n ← normal_at(point(0, 1.70711, -0.70711))
-  #Then n = vector(0, 0.70711, -0.70711)
+    #var s = sphere()
+
+    #s.transformation = translation(0, 1, 0)
+
+    #var n = s.normalAt(point(0, 1.70711, -0.70711))
+
+    #check(n == vector(0, 0.70711, -0.70711))
 
   #test "Computing the normal on a transformed sphere":
-  # var
-  # s ← sphere()
-    #And m ← scaling(1, 0.5, 1) * rotation_z(π/5)
-    #And set_transform(m)
-  #When n ← normal_at(point(0, √2/2, -√2/2))
-  #Then n = vector(0, 0.97014, -0.24254)
+    #var
+      #s = sphere()
+      #m = scaling(1, 0.5, 1) * rotation(axisZ, PI/5)
+
+    #s.transformation = m
+
+    #var n = s.normalAt(point(0, sqrt(2.0)/2, -sqrt(2.0)/2))
+
+    #check(n == vector(0, 0.97014, -0.24254))
 
   #test "A sphere has a default material":
-  # var
-  # s ← sphere()
+  #var
+  #s ← sphere()
   #When m ← s.material
   #Then m = material()
 
