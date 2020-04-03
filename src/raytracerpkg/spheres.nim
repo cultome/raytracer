@@ -10,6 +10,9 @@ type
 proc initSphere*(transformation: Matrix, material: Material): Sphere =
   Sphere(transformation: transformation, material: material)
 
+proc initSphere*(material: Material): Sphere =
+  initSphere(identity(4), material)
+
 proc initSphere*(transformation: Matrix): Sphere =
   initSphere(transformation, initMaterial())
 
