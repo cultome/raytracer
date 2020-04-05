@@ -17,15 +17,9 @@ suite "Feature World":
   test "The default world":
     var
       light = initLightPoint(initPoint(-10, 10, -10), initColor(1, 1, 1))
-      m1 = initMaterial()
-      s1 = initSphere(m1)
-      t1 = scaling(0.5, 0.5, 0.5)
-      s2 = initSphere(t1)
+      s1 = initSphere(material = initMaterial(color = (0.8, 1.0, 0.6), diffuse = 0.7, specular = 0.2))
+      s2 = initSphere(scaling(0.5, 0.5, 0.5))
       w = initWorld(@[s1, s2], light)
-
-    m1.color = (0.8, 1.0, 0.6)
-    m1.diffuse = 0.7
-    m1.specular = 0.2
 
     check(w.light == light)
     check(s1 in w.objects)

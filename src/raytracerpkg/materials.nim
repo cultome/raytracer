@@ -11,8 +11,8 @@ type
     specular*: float64 # 0..1
     shininess*: float64 # 10..200
 
-proc initMaterial*(): Material =
-  Material(color: initColor(1, 1, 1), ambient: 0.1, diffuse: 0.9, specular: 0.9, shininess: 200.0)
+proc initMaterial*(color = initColor(1, 1, 1), ambient = 0.1, diffuse = 0.9, specular = 0.9, shininess = 200.0): Material =
+  Material(color: color, ambient: ambient, diffuse: diffuse, specular: specular, shininess: shininess)
 
 proc `==`*(m1, m2: Material): bool =
     m1.color == m2.color and m1.ambient == m2.ambient and m1.diffuse == m2.diffuse and m1.specular == m2.specular and m1.shininess == m2.shininess

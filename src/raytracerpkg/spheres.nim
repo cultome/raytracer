@@ -7,17 +7,8 @@ type
     transformation*: Matrix
     material*: Material
 
-proc initSphere*(transformation: Matrix, material: Material): Sphere =
+proc initSphere*(transformation = identity(4), material = initMaterial()): Sphere =
   Sphere(transformation: transformation, material: material)
-
-proc initSphere*(material: Material): Sphere =
-  initSphere(identity(4), material)
-
-proc initSphere*(transformation: Matrix): Sphere =
-  initSphere(transformation, initMaterial())
-
-proc initSphere*(): Sphere =
-  initSphere(identity(4), initMaterial())
 
 proc normalAt*(s: Sphere, p: Point): Vector =
   var
