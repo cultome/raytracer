@@ -2,6 +2,8 @@ import unittest
 import options
 
 import raytracerpkg/spheres
+import raytracerpkg/rays
+import raytracerpkg/tuples
 import raytracerpkg/intersections
 
 suite "Intersections":
@@ -66,64 +68,66 @@ suite "Intersections":
 
     check(i.get() == i4)
 
-  #test "Precomputing the state of an intersection":
-  #var
-    #r ← ray(initPoint(0, 0, -5), initVector(0, 0, 1))
-    #And shape ← initSphere()
-    #And i ← initIntersection(4, shape)
-  #When comps ← prepare_computations(i, r)
-  #Then comps.t = i.t
-    #And comps.obj = i.obj
-    #And comps.point = initPoint(0, 0, -1)
-    #And comps.eyev = initVector(0, 0, -1)
-    #And comps.normalv = initVector(0, 0, -1)
+  test "Precomputing the state of an intersection":
+    var
+      r = initRay(initPoint(0, 0, -5), initVector(0, 0, 1))
+      shape = initSphere()
+      i = initIntersection(4, shape)
+      comps = r.prepareComputation(i)
+
+    check(comps.t == i.t)
+    check(comps.obj == i.obj)
+    check(comps.point == initPoint(0, 0, -1))
+    check(comps.eye == initVector(0, 0, -1))
+    check(comps.normal == initVector(0, 0, -1))
+
+  test "The hit, when an initIntersection occurs on the outside":
+    var
+      r = initRay(initPoint(0, 0, -5), initVector(0, 0, 1))
+      shape = initSphere()
+      i = initIntersection(4, shape)
+      comps = r.prepareComputation(i)
+
+    check(comps.inside == false)
+
+  test "The hit, when an intersection occurs on the inside":
+    var
+      r = initRay(initPoint(0, 0, 0), initVector(0, 0, 1))
+      shape = initSphere()
+      i = initIntersection(1, shape)
+      comps = r.prepareComputation(i)
+
+    check(comps.point == initPoint(0, 0, 1))
+    check(comps.eye == initVector(0, 0, -1))
+    check(comps.inside == true)
+    check(comps.normal == initVector(0, 0, -1))
 
   #test "Precomputing the reflection initVector":
   #var
     #shape ← plane()
-    #And r ← ray(initPoint(0, 1, -1), initVector(0, -√2/2, √2/2))
+    #And r ← initRay(initPoint(0, 1, -1), initVector(0, -√2/2, √2/2))
     #And i ← initIntersection(√2, shape)
-  #When comps ← prepare_computations(i, r)
+  #When comps ← i.prepareComputation(r)
   #Then comps.reflectv = initVector(0, √2/2, √2/2)
-
-  #test "The hit, when an initIntersection occurs on the outside":
-  #var
-    #r ← ray(initPoint(0, 0, -5), initVector(0, 0, 1))
-    #And shape ← initSphere()
-    #And i ← initIntersection(4, shape)
-  #When comps ← prepare_computations(i, r)
-  #Then comps.inside = false
-
-  #test "The hit, when an intersection occurs on the inside":
-  #var
-    #r ← ray(initPoint(0, 0, 0), initVector(0, 0, 1))
-    #And shape ← initSphere()
-    #And i ← initIntersection(1, shape)
-  #When comps ← prepare_computations(i, r)
-  #Then comps.point = initPoint(0, 0, 1)
-    #And comps.eyev = initVector(0, 0, -1)
-    #And comps.inside = true
-    ## normal would have been (0, 0, 1), but is inverted!
-    #And comps.normalv = initVector(0, 0, -1)
 
   #test "The hit should offset the point":
   #var
-    #r ← ray(initPoint(0, 0, -5), initVector(0, 0, 1))
+    #r ← initRay(initPoint(0, 0, -5), initVector(0, 0, 1))
     #And shape ← initSphere() with:
       #| transform | translation(0, 0, 1) |
     #And i ← initIntersection(5, shape)
-  #When comps ← prepare_computations(i, r)
+  #When comps ← i.prepareComputation(r)
   #Then comps.over_point.z < -EPSILON/2
     #And comps.point.z > comps.over_point.z
 
   #test "The under point is offset below the surface":
   #var
-    #r ← ray(initPoint(0, 0, -5), initVector(0, 0, 1))
+    #r ← initRay(initPoint(0, 0, -5), initVector(0, 0, 1))
     #And shape ← glass_sphere() with:
       #| transform | translation(0, 0, 1) |
     #And i ← initIntersection(5, shape)
     #And xs ← intersections(i)
-  #When comps ← prepare_computations(i, r, xs)
+  #When comps ← i.prepareComputation(r, xs)
   #Then comps.under_point.z > EPSILON/2
     #And comps.point.z < comps.under_point.z
 
@@ -138,7 +142,7 @@ suite "Intersections":
     #And C ← glass_sphere() with:
       #| transform                 | translation(0, 0, 0.25) |
       #| material.refractive_index | 2.5                     |
-    #And r ← ray(initPoint(0, 0, -4), initVector(0, 0, 1))
+    #And r ← initRay(initPoint(0, 0, -4), initVector(0, 0, 1))
     #And xs ← intersections(2:A, 2.75:B, 3.25:C, 4.75:B, 5.25:C, 6:A)
   #When comps ← prepare_computations(xs[<index>], r, xs)
   #Then comps.n1 = <n1>
@@ -156,7 +160,7 @@ suite "Intersections":
   #test "The Schlick approximation under total internal reflection":
   #var
     #shape ← glass_sphere()
-    #And r ← ray(initPoint(0, 0, √2/2), initVector(0, 1, 0))
+    #And r ← initRay(initPoint(0, 0, √2/2), initVector(0, 1, 0))
     #And xs ← intersections(-√2/2:shape, √2/2:shape)
   #When comps ← prepare_computations(xs[1], r, xs)
     #And reflectance ← schlick(comps)
@@ -165,7 +169,7 @@ suite "Intersections":
   #test "The Schlick approximation with a perpendicular viewing angle":
   #var
     #shape ← glass_sphere()
-    #And r ← ray(initPoint(0, 0, 0), initVector(0, 1, 0))
+    #And r ← initRay(initPoint(0, 0, 0), initVector(0, 1, 0))
     #And xs ← intersections(-1:shape, 1:shape)
   #When comps ← prepare_computations(xs[1], r, xs)
     #And reflectance ← schlick(comps)
@@ -174,7 +178,7 @@ suite "Intersections":
   #test "The Schlick approximation with small angle and n2 > n1":
   #var
     #shape ← glass_sphere()
-    #And r ← ray(initPoint(0, 0.99, -2), initVector(0, 0, 1))
+    #And r ← initRay(initPoint(0, 0.99, -2), initVector(0, 0, 1))
     #And xs ← intersections(1.8589:shape)
   #When comps ← prepare_computations(xs[0], r, xs)
     #And reflectance ← schlick(comps)

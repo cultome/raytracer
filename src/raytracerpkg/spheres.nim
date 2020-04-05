@@ -7,6 +7,12 @@ type
     transformation*: Matrix
     material*: Material
 
+proc `$`*(s: Sphere): string =
+  "Sphere"
+
+proc `==`*(s1, s2: Sphere): bool =
+  s1.transformation == s2.transformation and s1.material == s2.material
+
 proc initSphere*(transformation = identity(4), material = initMaterial()): Sphere =
   Sphere(transformation: transformation, material: material)
 

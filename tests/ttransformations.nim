@@ -160,3 +160,45 @@ suite "Matrix Transformations":
       tr = t3 * t2 * t1
 
     check(tr * p == initPoint(15, 0, 7))
+
+  test "The transformation matrix for the default orientation":
+    var
+      fromP = initPoint(0, 0, 0)
+      to = initPoint(0, 0, -1)
+      up = initVector(0, 1, 0)
+      t = viewTransform(fromP, to, up)
+
+    check(t == identity(4))
+
+  test "A view transformation matrix looking in positive z direction":
+    var
+      fromP = initPoint(0, 0, 0)
+      to = initPoint(0, 0, 1)
+      up = initVector(0, 1, 0)
+      t = viewTransform(fromP, to, up)
+
+    check(t == scaling(-1, 1, -1))
+
+  test "The view transformation moves the world":
+    var
+      fromP = initPoint(0, 0, 8)
+      to = initPoint(0, 0, 0)
+      up = initVector(0, 1, 0)
+      t = viewTransform(fromP, to, up)
+
+    check(t == translation(0, 0, -8))
+
+  test "An arbitrary view transformation":
+    var
+      fromP = initPoint(1, 3, 2)
+      to = initPoint(4, -2, 8)
+      up = initVector(1, 1, 0)
+      t = viewTransform(fromP, to, up)
+      r = initMatrix(@[
+        @[-0.50709, 0.50709, 0.67612, -2.36643],
+        @[0.76772, 0.60609, 0.12122, -2.82843],
+        @[-0.35857, 0.59761, -0.71714, 0.00000],
+        @[0.00000, 0.00000, 0.00000, 1.00000],
+      ])
+
+    check(t == r)

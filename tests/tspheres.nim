@@ -11,7 +11,7 @@ import raytracerpkg/materials
 suite "Spheres":
   test "A ray intersects a sphere at two points":
     var
-      r = ray(initPoint(0, 0, -5), initVector(0, 0, 1))
+      r = initRay(initPoint(0, 0, -5), initVector(0, 0, 1))
       s = initSphere()
       xs = r.intersect(s)
 
@@ -21,7 +21,7 @@ suite "Spheres":
 
   test "A ray intersects a sphere at a tangent":
     var
-      r = ray(initPoint(0, 1, -5), initVector(0, 0, 1))
+      r = initRay(initPoint(0, 1, -5), initVector(0, 0, 1))
       s = initSphere()
       xs = r.intersect(s)
 
@@ -31,7 +31,7 @@ suite "Spheres":
 
   test "A ray misses a sphere":
     var
-      r = ray(initPoint(0, 2, -5), initVector(0, 0, 1))
+      r = initRay(initPoint(0, 2, -5), initVector(0, 0, 1))
       s = initSphere()
       xs = r.intersect(s)
 
@@ -39,7 +39,7 @@ suite "Spheres":
 
   test "A ray originates inside a sphere":
     var
-      r = ray(initPoint(0, 0, 0), initVector(0, 0, 1))
+      r = initRay(initPoint(0, 0, 0), initVector(0, 0, 1))
       s = initSphere()
       xs = r.intersect(s)
 
@@ -49,7 +49,7 @@ suite "Spheres":
 
   test "A sphere is behind a ray":
     var
-      r = ray(initPoint(0, 0, 5), initVector(0, 0, 1))
+      r = initRay(initPoint(0, 0, 5), initVector(0, 0, 1))
       s = initSphere()
       xs = r.intersect(s)
 
@@ -59,7 +59,7 @@ suite "Spheres":
 
   test "Intersect sets the object on the intersection":
     var
-      r = ray(initPoint(0, 0, -5), initVector(0, 0, 1))
+      r = initRay(initPoint(0, 0, -5), initVector(0, 0, 1))
       s = initSphere()
       xs = r.intersect(s)
 
@@ -82,7 +82,7 @@ suite "Spheres":
 
   test "Intersecting a scaled sphere with a ray":
     var
-      r = ray(initPoint(0, 0, -5), initVector(0, 0, 1))
+      r = initRay(initPoint(0, 0, -5), initVector(0, 0, 1))
       s = initSphere(scaling(2, 2, 2))
       xs = r.intersect(s)
 
@@ -92,7 +92,7 @@ suite "Spheres":
 
   test "Intersecting a translated sphere with a ray":
     var
-      r = ray(initPoint(0, 0, -5), initVector(0, 0, 1))
+      r = initRay(initPoint(0, 0, -5), initVector(0, 0, 1))
       s = initSphere(translation(5, 0, 0))
 
     check(r.intersect(s).len == 0)

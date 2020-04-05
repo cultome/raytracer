@@ -1,5 +1,6 @@
 import math
 
+import raytracerpkg/tuples
 import raytracerpkg/matrices
 
 type
@@ -46,3 +47,18 @@ proc shearing*(xy, xz, yx, yz, zx, zy: float64): Matrix =
   result[1][2] = yz
   result[2][0] = zx
   result[2][1] = zy
+
+proc viewTransform*(fromP, to: Point, up: Vector): Matrix =
+  var
+    fwd = (to - fromP).normalize
+    left = fwd.cross(up.normalize)
+    trueUp = fwd.cross(left)
+    orientation = initMatrix(@[
+      @[left.x, left.y, left.z, 0],
+      @[trueUp.x, trueUp.y, trueUp.z, 0],
+      @[-fwd.x, -fwd.y, -fwd.z, 0],
+      @[0.0, 0.0, 0.0, 1.0],
+    ])
+    trans = translation(-fromP.x, -fromP.y, -fromP.z)
+
+  orientation * trans
