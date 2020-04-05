@@ -48,7 +48,7 @@ proc shearing*(xy, xz, yx, yz, zx, zy: float64): Matrix =
   result[2][0] = zx
   result[2][1] = zy
 
-proc viewTransform*(fromP, to: Point, up: Vector): Matrix =
+proc viewTransformation*(fromP, to: Point, up: Vector): Matrix =
   var
     fwd = (to - fromP).normalize
     left = fwd.cross(up.normalize)

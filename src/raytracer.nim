@@ -9,6 +9,7 @@ import raytracerpkg/lights
 import raytracerpkg/materials
 import raytracerpkg/world
 import raytracerpkg/computation
+import raytracerpkg/camera
 
 when isMainModule:
   echo("Running raytracer!")

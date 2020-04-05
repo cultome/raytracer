@@ -45,13 +45,13 @@ template `$`*(a: Tuple): string =
   "($1, $2, $3, $4)" % [$a.x, $a.y, $a.z, $a.w]
 
 # constructors
-proc initTuple*(x, y, z, w: int32): Tuple =
+proc initTuple*(x, y, z, w: int): Tuple =
   Tuple(x: x.float64, y: y.float64, z: z.float64, w: w.float64)
 
 proc initTuple*(x, y, z, w: float64): Tuple =
   Tuple(x: x, y: y, z: z, w: w)
 
-proc initPoint*(x, y, z: int32): Point =
+proc initPoint*(x, y, z: int): Point =
   Point(x: x.float64, y: y.float64, z: z.float64, w: 1.0.float64)
 
 proc initPoint*(x, y, z: float64): Point =

@@ -166,7 +166,7 @@ suite "Matrix Transformations":
       fromP = initPoint(0, 0, 0)
       to = initPoint(0, 0, -1)
       up = initVector(0, 1, 0)
-      t = viewTransform(fromP, to, up)
+      t = viewTransformation(fromP, to, up)
 
     check(t == identity(4))
 
@@ -175,7 +175,7 @@ suite "Matrix Transformations":
       fromP = initPoint(0, 0, 0)
       to = initPoint(0, 0, 1)
       up = initVector(0, 1, 0)
-      t = viewTransform(fromP, to, up)
+      t = viewTransformation(fromP, to, up)
 
     check(t == scaling(-1, 1, -1))
 
@@ -184,7 +184,7 @@ suite "Matrix Transformations":
       fromP = initPoint(0, 0, 8)
       to = initPoint(0, 0, 0)
       up = initVector(0, 1, 0)
-      t = viewTransform(fromP, to, up)
+      t = viewTransformation(fromP, to, up)
 
     check(t == translation(0, 0, -8))
 
@@ -193,7 +193,7 @@ suite "Matrix Transformations":
       fromP = initPoint(1, 3, 2)
       to = initPoint(4, -2, 8)
       up = initVector(1, 1, 0)
-      t = viewTransform(fromP, to, up)
+      t = viewTransformation(fromP, to, up)
       r = initMatrix(@[
         @[-0.50709, 0.50709, 0.67612, -2.36643],
         @[0.76772, 0.60609, 0.12122, -2.82843],
