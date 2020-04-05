@@ -61,8 +61,8 @@ proc render*(c: Camera, w: World): Canvas =
     ray: Ray
     color: Color
 
-  for y in 0..<c.canvasWidth:
-    for x in 0..<c.canvasHeight:
+  for y in 0..<c.canvasHeight:
+    for x in 0..<c.canvasWidth:
       ray = c.rayForPixel(x, y)
       color = ray.colorAt(w)
       canvas.writePixel(x, y, color)

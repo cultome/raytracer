@@ -1,4 +1,5 @@
 import strutils
+import algorithm
 
 import raytracerpkg/tuples
 
@@ -40,7 +41,7 @@ proc normalizeColor(val: float64): int =
   else:
     int(255 * val + 0.5)
 
-proc toPpm*(c: Canvas): string =
+proc toPpm*(c: Canvas, invert = false): string =
   let header = "P3\n$1 $2\n255" % [$c.width, $c.height]
   var
     lines = @[""]
@@ -52,10 +53,11 @@ proc toPpm*(c: Canvas): string =
       for val in [pixel.red, pixel.green, pixel.blue]:
         normalized = $normalizeColor(val)
 
-        if lines[currLine].len + normalized.len > 70:
-          lines[currLine] = lines[currLine].strip
-          lines.add("")
-          currLine += 1
+        if not invert:
+          if lines[currLine].len + normalized.len > 70:
+            lines[currLine] = lines[currLine].strip
+            lines.add("")
+            currLine += 1
 
         lines[currLine] &= normalized & " "
 
@@ -63,7 +65,10 @@ proc toPpm*(c: Canvas): string =
     lines.add("")
     currLine += 1
 
+  if invert:
+    lines.reverse
+
   header & "\n" & lines.join("\n")
 
 proc save*(c: Canvas, filename: string) =
-  writeFile(filename, c.toPpm)
+  writeFile(filename, c.toPpm(true))
