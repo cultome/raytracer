@@ -7,6 +7,7 @@ import raytracerpkg/spheres
 import raytracerpkg/intersections
 import raytracerpkg/lights
 import raytracerpkg/materials
+import raytracerpkg/world
 
 when isMainModule:
   echo("Running raytracer!")
